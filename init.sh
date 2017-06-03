@@ -47,6 +47,9 @@ brew install zlib
 brew install node
 brew install redis
 ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
+
+echo "Install Brew's etical hacking tools"
+brew install sqlmap
 brew install tor
 
 echo "Install Brew's Web Server"
