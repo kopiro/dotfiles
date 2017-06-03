@@ -50,6 +50,7 @@ ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
 echo "Install Brew's etical hacking tools"
 brew install sqlmap
+brew install ab
 brew install tor
 
 echo "Install Brew's Web Server"
@@ -85,7 +86,6 @@ brew cask install sqlpro-for-sqlite
 brew cask install the-unarchiver
 brew cask install transmit
 brew cask install google-chrome
-brew cask install google-chrome-canary
 brew cask install firefox
 brew cask install 1password
 brew cask install skype
