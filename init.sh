@@ -92,6 +92,7 @@ brew cask install skype
 brew cask install sequel-pro
 brew cask install google-drive
 brew cask install odrive
+brew cask install tower
 
 echo "Install NodeJS stuffs"
 npm -g install yarn
