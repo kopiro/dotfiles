@@ -24,6 +24,9 @@ echo "Installing and upgrading Brew"
 brew update
 brew upgrade
 
+echo "Install ZSH"
+brew install zsh zsh-completions
+
 echo "Install Brew's software base"
 brew install coreutils
 brew install moreutils
@@ -84,6 +87,8 @@ brew cask install firefox
 brew cask install 1password
 brew cask install skype
 brew cask install sequel-pro
+brew cask install google-drive
+brew cask install odrive
 
 echo "Install NodeJS stuffs"
 npm -g install yarn
