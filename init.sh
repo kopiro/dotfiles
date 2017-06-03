@@ -14,14 +14,15 @@ sudo scutil --set HostName "$MYHOST"
 
 echo "Configuring base directories..."
 mkdir -p ~/Library/LaunchAgents
-mkdir -p ~/Sites; sudo ln -sf ~/Sites /var/www
-sudo mkdir -p /opt; sudo chown -R $ME:staff /opt
+mkdir -p ~/Sites
+sudo ln -sf ~/Sites /var/www
+sudo mkdir -p /opt
+sudo chown -R "$ME":staff /opt
 
 echo "Installing and upgrading Brew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew tap homebrew/dupes
-brew tap homebrew/versions
-brew update && brew upgrade
+brew update
+brew upgrade
 
 echo "Install Brew's software base"
 brew install coreutils
@@ -41,7 +42,8 @@ brew install libpng
 brew install gd 
 brew install zlib
 brew install node
-brew install redis; ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
+brew install redis
+ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 brew install tor
 
 echo "Install Brew's Web Server"
