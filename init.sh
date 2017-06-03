@@ -107,9 +107,9 @@ unzip /tmp/awscli-bundle.zip
 sudo ./tmp/awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 echo "Setup MacOS"
-chmod +x macos.sh
-source macos.sh
+chmod +x .macos.sh
+source .macos.sh
 
 echo "Setup MacOS privacy..."
-chmod +x macos-privacy.sh
-source macos-privacy.sh
+chmod +x .macos-privacy.sh
+source .macos-privacy.sh
