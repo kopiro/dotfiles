@@ -85,19 +85,13 @@ brew cask install 1password
 brew cask install skype
 brew cask install sequel-pro
 
-echo "Cleaning Brew"
-brew cleanup
-
 echo "Install NodeJS stuffs"
 npm -g install yarn
-npm -g install titanium
-npm -g install alloy
-npm -g install tishadow
-npm -g install ticons
-npm -g install tisdk
-npm -g install tn
-npm -g install gittio
 npm -g install eslint
+
+echo "Installing Titanium stuffs"
+chmod +x .titanium.sh
+source .titanium.sh
 
 echo "Install PECL"
 curl -O http://pear.php.net/go-pear.phar
@@ -115,3 +109,6 @@ source .macos.sh
 echo "Setup MacOS privacy..."
 chmod +x .macos-privacy.sh
 source .macos-privacy.sh
+
+echo "Cleaning Brew"
+brew cleanup
