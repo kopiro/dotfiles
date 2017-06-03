@@ -44,9 +44,10 @@ brew install jpeg
 brew install libpng 
 brew install gd 
 brew install zlib
+
+echo "Install interpreters"
 brew install node
-brew install redis
-ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
+# brew install python3
 
 echo "Install Brew's etical hacking tools"
 brew install sqlmap
@@ -62,9 +63,12 @@ sudo chown root:wheel /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 brew install mariadb
 ln -sf /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents
 
-brew install homebrew/php/php70 --with-imagick --with-fpm --with-homebrew-curl
+brew install php70 --with-imagick --with-fpm --with-homebrew-curl
 brew install php70-mcrypt php70-imagick
 ln -sf /usr/local/opt/php70/*.plist ~/Library/LaunchAgents
+
+brew install redis
+ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
 echo "Install Brew Cask's software base"
 brew cask install smcfancontrol
@@ -102,22 +106,30 @@ echo "Installing Titanium stuffs"
 chmod +x .titanium.sh
 source .titanium.sh
 
-echo "Install PECL"
-curl -O http://pear.php.net/go-pear.phar
-sudo php -d detect_unicode=0 go-pear.phar
+# echo "Install PIP3"
+# curl https://bootstrap.pypa.io/get-pip.py -p /tmp/get-pip.py
+# /usr/local/bin/python3 /tmp/get-pip.py --user
+# rm /tmp/get-pip.py
 
-echo "Install AWS CLI"
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "/tmp/awscli-bundle.zip"
-unzip /tmp/awscli-bundle.zip
-sudo ./tmp/awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+echo "Install PECL"
+curl http://pear.php.net/go-pear.phar -o /tmp/go-pear.phar
+sudo /usr/local/bin/php -d detect_unicode=0 /tmp/go-pear.phar
+rm /tmp/go-pear.phar
+
+echo "Install Cloud's CLI"
+brew install awscli
+brew cask install google-cloud-sdk
 
 echo "Setup MacOS"
 chmod +x .macos.sh
 source .macos.sh
 
 echo "Setup MacOS privacy..."
+export PYTHONPATH="/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/PyObjC/"
 chmod +x .macos-privacy.sh
 source .macos-privacy.sh
 
 echo "Cleaning Brew"
 brew cleanup
+
+echo "Goodbye!"
