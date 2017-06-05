@@ -25,7 +25,7 @@ brew update
 brew upgrade
 
 echo "Install ZSH"
-brew install zsh zsh-completions
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "Install Brew's software base"
 brew install coreutils
