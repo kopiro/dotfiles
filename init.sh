@@ -36,13 +36,11 @@ brew install gnu-sed --with-default-names
 brew install wget --with-iri
 brew install autoconf
 brew install imagemagick --with-webp
+brew install gd 
 brew install gettext 
 brew install openssl 
 brew install git 
-brew install freetype 
-brew install jpeg 
-brew install libpng 
-brew install gd 
+brew install freetype  
 brew install zlib
 brew install ffmpeg --with-libvorbis --with-libvpx
 
