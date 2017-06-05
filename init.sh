@@ -44,6 +44,7 @@ brew install jpeg
 brew install libpng 
 brew install gd 
 brew install zlib
+brew install ffmpeg --with-libvorbis --with-libvpx
 
 echo "Install interpreters"
 brew install node
