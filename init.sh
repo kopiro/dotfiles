@@ -47,6 +47,7 @@ echo "Install Brew's etical hacking tools"
 brew install sqlmap
 brew install ab
 brew install tor
+brew install nmap
 
 echo "Install Brew's Web Server"
 
@@ -91,6 +92,7 @@ brew cask install google-drive
 brew cask install odrive
 brew cask install tower
 brew cask install spotify
+brew cask install transmission
 
 echo "Install NodeJS stuffs"
 npm -g install yarn
