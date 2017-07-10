@@ -37,35 +37,40 @@ brew install git
 brew install freetype  
 brew install zlib
 brew install ffmpeg --with-libvorbis --with-libvpx
+brew install libimobiledevice
 
 echo "Install interpreters"
 brew install node
 brew cask install java
-# brew install python3
-
-echo "Install Brew's etical hacking tools"
-brew install sqlmap
-brew install ab
-brew install tor
-brew install nmap
-
-echo "Install Brew's Web Server"
-
-brew install nginx
-ln -sf /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
-
-brew install mariadb
-ln -sf /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents
-
 brew tap homebrew/homebrew-php
 brew install php71 --with-homebrew-curl
 brew install php71-mcrypt php71-imagick
-ln -sf /usr/local/opt/php71/*.plist ~/Library/LaunchAgents
 
+echo "Install Hacking tools"
+brew install sqlmap
+brew install tor
+brew install nmap
+brew cask install wireshark
+brew cask install tunnelblick
+brew cask install impactor
+
+echo "Install Web tools"
+
+brew install nginx
+brew install mariadb
 brew install redis
+
+echo "Symlinking to startup"
+ln -sf /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
+ln -sf /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents
+ln -sf /usr/local/opt/php71/*.plist ~/Library/LaunchAgents
 ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
-echo "Install Brew Cask's software base"
+echo "Install Docker"
+brew cask install docker
+brew cask install kitematic
+
+echo "Install Cask base"
 brew cask install smcfancontrol
 brew cask install vlc
 brew cask install slack
@@ -74,6 +79,7 @@ brew cask install telegram
 brew cask install sublime-text
 brew cask install torbrowser
 brew cask install virtualbox
+brew cask install virtualbox-extension-pack
 brew cask install charles
 brew cask install evernote
 brew cask install gpgtools
@@ -99,8 +105,8 @@ npm -g install yarn
 npm -g install eslint
 
 echo "Install PECL"
-curl http://pear.php.net/go-pear.phar -o /tmp/go-pear.phar
-sudo /usr/local/bin/php -d detect_unicode=0 /tmp/go-pear.phar
+curl http://pear.php.net/go-pear.phar -o /tmp/go-pear.phar &&
+sudo /usr/local/bin/php -d detect_unicode=0 /tmp/go-pear.phar &&
 rm /tmp/go-pear.phar
 
 echo "Install Cloud's CLI"

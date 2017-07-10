@@ -1,5 +1,14 @@
 ## kopiro dotfiles
 
+### Base software
+
 ```
-source init.sh
+./init.sh
+```
+
+### macOS sensible defaults
+
+```
+./macos.sh
+./privacy.sh
 ```
