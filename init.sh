@@ -16,6 +16,9 @@ sudo ln -sf ~/Sites /var/www
 sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
 
+echo "Configuring base configs..."
+echo 'no-tty' >> ~/.gnupg/gpg.conf
+
 echo "Installing and upgrading Brew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
@@ -40,7 +43,7 @@ brew install ffmpeg --with-libvorbis --with-libvpx
 brew install libimobiledevice
 
 echo "Install interpreters"
-brew install node
+brew install node@6
 brew cask install java
 brew tap homebrew/homebrew-php
 brew install php71 --with-homebrew-curl
@@ -89,6 +92,7 @@ brew cask install sparkleshare
 brew cask install sqlpro-for-sqlite
 brew cask install the-unarchiver
 brew cask install transmit
+brew cask install transmit-disk
 brew cask install google-chrome
 brew cask install firefox
 brew cask install 1password
@@ -99,6 +103,7 @@ brew cask install odrive
 brew cask install tower
 brew cask install spotify
 brew cask install transmission
+brew cask install coderunner
 
 echo "Install NodeJS stuffs"
 npm -g install yarn
