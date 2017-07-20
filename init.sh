@@ -11,7 +11,6 @@ echo "Configuring base directories..."
 mkdir -p ~/Library/LaunchAgents
 mkdir -p ~/Sites
 mkdir -p ~/Projects
-mkdir -p ~/Repos
 sudo ln -sf ~/Sites /var/www
 sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
@@ -58,7 +57,6 @@ brew cask install tunnelblick
 brew cask install impactor
 
 echo "Install Web tools"
-
 brew install nginx
 brew install mariadb
 brew install redis
@@ -104,6 +102,12 @@ brew cask install tower
 brew cask install spotify
 brew cask install transmission
 brew cask install coderunner
+brew cask install sketch
+brew cask install angry-ip-scanner
+brew cask install paw
+
+echo "Install Brew caskromm fonts"
+brew tap caskroom/fonts
 
 echo "Install NodeJS stuffs"
 npm -g install yarn
