@@ -47,6 +47,7 @@ brew cask install java
 brew tap homebrew/homebrew-php
 brew install php71 --with-homebrew-curl
 brew install php71-mcrypt php71-imagick
+brew cask install android-sdk
 
 echo "Install Hacking tools"
 brew install sqlmap
@@ -55,6 +56,7 @@ brew install nmap
 brew cask install wireshark
 brew cask install tunnelblick
 brew cask install impactor
+brew cask install hopper-disassembler
 
 echo "Install Web tools"
 brew install nginx
