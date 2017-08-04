@@ -1,14 +1,20 @@
 ## kopiro dotfiles
 
-### Base software
+### base software + Casks
 
 ```
 ./init.sh
 ```
 
-### macOS sensible defaults
+### macOS (sensible defaults + don't steal your privacy)
 
 ```
 ./macos.sh
 ./privacy.sh
+```
+
+# oh my zsh
+
+```
+./zsh.sh
 ```
