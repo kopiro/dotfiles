@@ -13,7 +13,7 @@
 ./privacy.sh
 ```
 
-# oh my zsh
+### oh-my-zsh shell
 
 ```
 ./zsh.sh
