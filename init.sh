@@ -57,6 +57,7 @@ brew cask install wireshark
 brew cask install tunnelblick
 brew cask install impactor
 brew cask install hopper-disassembler
+brew install apktool
 
 echo "Install Web tools"
 brew install nginx
@@ -107,6 +108,12 @@ brew cask install coderunner
 brew cask install sketch
 brew cask install angry-ip-scanner
 brew cask install paw
+brew cask install poedit
+brew cask install sip
+brew cask install hex-fiend
+brew cask install robo-3t
+brew cask install ssh-tunnel-manager
+brew cask install cloudapp
 
 echo "Install Brew caskromm fonts"
 brew tap caskroom/fonts
@@ -126,5 +133,6 @@ brew cask install google-cloud-sdk
 
 echo "Cleaning Brew"
 brew cleanup
+brew cask cleanup
 
 echo "Goodbye!"
