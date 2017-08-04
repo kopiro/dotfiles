@@ -1,6 +1,6 @@
 ## kopiro dotfiles
 
-### base software + Casks
+### base software + casks
 
 ```
 ./init.sh
