@@ -1,6 +1,6 @@
 ## kopiro dotfiles
 
-### base software + Casks
+### base software + casks
 
 ```
 ./init.sh
@@ -13,7 +13,7 @@
 ./privacy.sh
 ```
 
-# oh my zsh
+### oh-my-zsh shell
 
 ```
 ./zsh.sh
