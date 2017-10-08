@@ -58,6 +58,8 @@ brew cask install tunnelblick
 brew cask install impactor
 brew cask install hopper-disassembler
 brew install apktool
+brew cask install little-snitch
+brew cask install micro-snitch
 
 echo "Install Web tools"
 brew install nginx
