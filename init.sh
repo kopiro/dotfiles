@@ -19,6 +19,9 @@ sudo ln -sf ~/Sites /var/www
 sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
 
+echo "Configuring things..."
+echo 'no-tty' >> ~/.gnupg/gpg.conf
+
 echo "Installing and upgrading Brew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
@@ -79,6 +82,7 @@ brew cask install telegram
 brew cask install sublime-text
 brew cask install torbrowser
 brew cask install virtualbox
+brew cask install virtualbox-extension-pack
 brew cask install charles
 brew cask install evernote
 brew cask install gpgtools
