@@ -40,10 +40,8 @@ brew install zlib
 brew install ffmpeg --with-libvorbis --with-libvpx
 brew install libimobiledevice
 brew install subliminal 
-
-echo "Install interpreters"
 brew install node
-brew cask install java
+brew cask install caskroom/versions/java8
 brew cask install android-sdk
 
 echo "Install Hacking tools"
@@ -62,11 +60,6 @@ echo "Install Web tools"
 brew install nginx
 brew install mariadb
 brew install redis
-
-echo "Symlinking to startup"
-ln -sf /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
-ln -sf /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents
-ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
 echo "Install Docker"
 brew cask install docker
