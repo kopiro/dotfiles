@@ -9,9 +9,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Configuring base directories..."
 mkdir -p ~/Library/LaunchAgents
-mkdir -p ~/Sites
 mkdir -p ~/Projects
-sudo ln -sf ~/Sites /var/www
 sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
 
@@ -40,13 +38,11 @@ brew install freetype
 brew install zlib
 brew install ffmpeg --with-libvorbis --with-libvpx
 brew install libimobiledevice
+brew install subliminal 
 
 echo "Install interpreters"
-brew install node@6
+brew install node
 brew cask install java
-brew tap homebrew/homebrew-php
-brew install php71 --with-homebrew-curl
-brew install php71-mcrypt php71-imagick
 brew cask install android-sdk
 
 echo "Install Hacking tools"
@@ -69,7 +65,6 @@ brew install redis
 echo "Symlinking to startup"
 ln -sf /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
 ln -sf /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents
-ln -sf /usr/local/opt/php71/*.plist ~/Library/LaunchAgents
 ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
 echo "Install Docker"
