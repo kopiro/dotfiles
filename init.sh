@@ -30,6 +30,7 @@ brew install gnu-sed --with-default-names
 brew install wget --with-iri
 brew install autoconf
 brew install imagemagick --with-webp
+brew install graphicsmagick
 brew install gd 
 brew install gettext 
 brew install openssl 
