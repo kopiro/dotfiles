@@ -40,14 +40,13 @@ brew install ffmpeg --with-libvorbis --with-libvpx
 brew install libimobiledevice
 
 echo "Install interpreters"
-brew install node@6
-brew cask install java
+brew install node
+brew install nvm
+brew cask install caskroom/versions/java8
 brew tap homebrew/homebrew-php
 brew install php71 --with-homebrew-curl
 brew install php71-mcrypt php71-imagick
-brew cask install caskroom/versions/java8
 brew cask install android-studio
-brew install node
 
 echo "Install Hacking tools"
 brew install sqlmap
