@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 npm -g install titanium
 npm -g install alloy

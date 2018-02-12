@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 ME=`whoami`
 
@@ -8,9 +8,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Configuring base directories..."
 mkdir -p ~/Library/LaunchAgents
-mkdir -p ~/Sites
 mkdir -p ~/Projects
-sudo ln -sf ~/Sites /var/www
 sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
 
@@ -31,6 +29,7 @@ brew install gnu-sed --with-default-names
 brew install wget --with-iri
 brew install autoconf
 brew install imagemagick --with-webp
+brew install graphicsmagick
 brew install gd 
 brew install gettext 
 brew install openssl 
@@ -46,7 +45,9 @@ brew cask install java
 brew tap homebrew/homebrew-php
 brew install php71 --with-homebrew-curl
 brew install php71-mcrypt php71-imagick
+brew cask install caskroom/versions/java8
 brew cask install android-studio
+brew install node
 
 echo "Install Hacking tools"
 brew install sqlmap
