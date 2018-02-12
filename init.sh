@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 ME=`whoami`
-DIR=`pwd`
 
 # Ask for the administrator password upfront
 sudo -v
@@ -47,7 +46,7 @@ brew cask install java
 brew tap homebrew/homebrew-php
 brew install php71 --with-homebrew-curl
 brew install php71-mcrypt php71-imagick
-brew cask install android-sdk
+brew cask install android-studio
 
 echo "Install Hacking tools"
 brew install sqlmap
@@ -63,12 +62,12 @@ brew cask install micro-snitch
 
 echo "Install Web tools"
 brew install nginx
-brew install mariadb
+brew install mysql
 brew install redis
 
 echo "Symlinking to startup"
 ln -sf /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
-ln -sf /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents
+ln -sf /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
 ln -sf /usr/local/opt/php71/*.plist ~/Library/LaunchAgents
 ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
@@ -113,9 +112,9 @@ brew cask install paw
 brew cask install poedit
 brew cask install sip
 brew cask install hex-fiend
-brew cask install robo-3t
-brew cask install ssh-tunnel-manager
+brew cask install studio-3t
 brew cask install cloudapp
+brew cask install sourcetree
 
 echo "Install Brew caskromm fonts"
 brew tap caskroom/fonts
