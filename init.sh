@@ -42,46 +42,23 @@ brew install libimobiledevice
 echo "Install interpreters"
 brew install node
 brew install nvm
-brew cask install caskroom/versions/java8
-brew tap homebrew/homebrew-php
-brew install php71 --with-homebrew-curl
-brew install php71-mcrypt php71-imagick
-brew cask install android-studio
 
 echo "Install Hacking tools"
-brew install sqlmap
-brew install tor
-brew install nmap
-brew cask install wireshark
 brew cask install tunnelblick
 brew cask install impactor
 brew cask install hopper-disassembler
-brew install apktool
-brew cask install little-snitch
-brew cask install micro-snitch
-
-echo "Install Web tools"
-brew install nginx
-brew install mysql
-brew install redis
-
-echo "Symlinking to startup"
-ln -sf /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
-ln -sf /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
-ln -sf /usr/local/opt/php71/*.plist ~/Library/LaunchAgents
-ln -svf /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 
 echo "Install Docker"
 brew cask install docker
 brew cask install kitematic
 
 echo "Install Cask base"
-brew cask install smcfancontrol
 brew cask install vlc
 brew cask install slack
 brew cask install alfred
 brew cask install telegram
 brew cask install sublime-text
+brew cask install visual-studio-code
 brew cask install torbrowser
 brew cask install virtualbox
 brew cask install virtualbox-extension-pack
@@ -90,24 +67,17 @@ brew cask install evernote
 brew cask install gpgtools
 brew cask install iterm2
 brew cask install dash
-brew cask install sparkleshare
 brew cask install sqlpro-for-sqlite
 brew cask install the-unarchiver
 brew cask install transmit
-brew cask install transmit-disk
 brew cask install google-chrome
 brew cask install firefox
 brew cask install 1password
-brew cask install skype
 brew cask install sequel-pro
 brew cask install google-drive
-brew cask install odrive
-brew cask install tower
 brew cask install spotify
 brew cask install transmission
-brew cask install coderunner
 brew cask install sketch
-brew cask install angry-ip-scanner
 brew cask install paw
 brew cask install poedit
 brew cask install sip
@@ -118,15 +88,6 @@ brew cask install sourcetree
 
 echo "Install Brew caskromm fonts"
 brew tap caskroom/fonts
-
-echo "Install NodeJS stuffs"
-npm -g install yarn
-npm -g install eslint
-
-echo "Install PECL"
-curl http://pear.php.net/go-pear.phar -o /tmp/go-pear.phar &&
-sudo /usr/local/bin/php -d detect_unicode=0 /tmp/go-pear.phar &&
-rm /tmp/go-pear.phar
 
 echo "Install Cloud's CLI"
 brew install awscli
