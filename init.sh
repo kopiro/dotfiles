@@ -13,7 +13,7 @@ sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
 
 echo "Configuring base configs..."
-echo 'no-tty' >> ~/.gnupg/gpg.conf
+mkdir -p ~/.gnupg && echo 'no-tty' >> ~/.gnupg/gpg.conf
 
 echo "Installing and upgrading Brew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -21,22 +21,15 @@ brew update
 brew upgrade
 
 echo "Install Brew's software base"
-brew install coreutils
-brew install moreutils
-brew install findutils
-brew install gnu-sed --with-default-names
 brew install wget --with-iri
 brew install autoconf
 if [ "$1" == "advanced" ]; then
-brew install curl --force
 brew install imagemagick --with-webp
 brew install graphicsmagick
-brew install gd 
 brew install ffmpeg --with-libvorbis --with-libvpx
 brew install libimobiledevice
 brew install gettext 
 brew install openssl 
-brew install git 
 brew install freetype  
 brew install zlib
 fi
