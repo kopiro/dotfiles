@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+set -x 
 from Foundation import NSMutableArray, NSMutableDictionary
 from Foundation import CFPreferencesSynchronize, CFPreferencesCopyValue, CFPreferencesCopyKeyList, CFPreferencesSetValue, CFPreferencesCopyMultiple, CFPreferencesSetMultiple, kCFPreferencesCurrentUser, kCFPreferencesAnyHost
 import os, sys

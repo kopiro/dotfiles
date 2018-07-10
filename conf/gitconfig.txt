@@ -1,0 +1,35 @@
+[push]
+   default = current
+
+[user]
+   name = Flavio De Stefano
+   email = destefano.flavio@gmail.com
+   signingkey = D982268E
+   #name = Flavio De Stefano
+   #email = flavio.destefano@caffeina.com
+   #signingkey = 3B5B3578
+
+[commit]
+   gpgsign = true
+
+[credential]
+   helper = osxkeychain
+
+[core]
+   excludesfile = /opt/sync/conf/gitignore_global.txt
+   ignorecase = false
+
+[filter "lfs"]
+   clean = git-lfs clean %f
+   smudge = git-lfs smudge %f
+   required = true
+
+[gpg]
+	program = gpg
+
+[alias]
+   c = checkout
+   cb = checkout -b
+   m = merge
+   b = branch
+   s = status

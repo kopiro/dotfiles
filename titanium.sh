@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 npm -g install titanium
 npm -g install alloy
 npm -g install tishadow

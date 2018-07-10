@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 ME=`whoami`
 
 # Ask for the administrator password upfront
@@ -7,7 +7,6 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Configuring base directories..."
-mkdir -p ~/Library/LaunchAgents
 mkdir -p ~/Projects
 sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
@@ -23,6 +22,7 @@ brew upgrade
 echo "Install Brew's software base"
 brew install wget --with-iri
 brew install autoconf
+brew install gpg
 if [ "$1" == "advanced" ]; then
 brew install imagemagick --with-webp
 brew install graphicsmagick
@@ -56,10 +56,11 @@ brew cask install google-chrome
 brew cask install transmit
 brew cask install 1password
 brew cask install sequel-pro
-brew cask install google-drive
 brew cask install spotify
 brew cask install cloudapp
 if [ "$1" == "advanced" ]; then
+brew cask install google-drive-file-stream
+brew cask install google-backup-and-sync
 brew cask install torbrowser
 brew cask install virtualbox
 brew cask install virtualbox-extension-pack
