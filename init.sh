@@ -81,6 +81,7 @@ brew cask install poedit
 brew cask install sip
 brew cask install hex-fiend
 brew cask install studio-3t
+brew cask install fantastical
 brew cask install sourcetree
 fi
 
