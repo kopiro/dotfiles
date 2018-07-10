@@ -12,17 +12,22 @@ sudo mkdir -p /opt
 sudo chown -R "$ME":staff /opt
 
 echo "Configuring base configs..."
-mkdir -p ~/.gnupg && echo 'no-tty' >> ~/.gnupg/gpg.conf
 
 echo "Installing and upgrading Brew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew upgrade
 
+echo "Configuring GPG"
+mkdir -p ~/.gnupg
+brew install gpg gpg-agent pinentry-mac
+echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+echo "no-tty" >> ~/.gnupg/gpg.conf
+gpgconf --kill gpg-agent
+
 echo "Install Brew's software base"
 brew install wget --with-iri
 brew install autoconf
-brew install gpg
 if [ "$1" == "advanced" ]; then
 brew install imagemagick --with-webp
 brew install graphicsmagick
