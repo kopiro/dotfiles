@@ -2,21 +2,21 @@
    default = current
 
 [user]
-   name = Flavio De Stefano
-   email = destefano.flavio@gmail.com
+	name = Flavio De Stefano
+	email = destefano.flavio@gmail.com
    signingkey = D982268E
    #name = Flavio De Stefano
    #email = flavio.destefano@caffeina.com
-   #signingkey = 3B5B3578
 
 [commit]
-   gpgsign = true
+	template = /Users/flavio.destefano/.stCommitMsg
+	gpgsign = true
 
 [credential]
    helper = osxkeychain
 
 [core]
-   excludesfile = /opt/sync/conf/gitignore_global.txt
+	excludesfile = /Users/flavio.destefano/.gitignore_global
    ignorecase = false
 
 [filter "lfs"]
@@ -25,7 +25,7 @@
    required = true
 
 [gpg]
-	program = gpg
+   program = /usr/local/bin/gpg 
 
 [alias]
    c = checkout
@@ -33,3 +33,11 @@
    m = merge
    b = branch
    s = status
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

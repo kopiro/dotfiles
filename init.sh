@@ -83,6 +83,7 @@ brew cask install hex-fiend
 brew cask install studio-3t
 brew cask install fantastical
 brew cask install sourcetree
+brew cask install bettertouchtool
 fi
 
 echo "Install Brew caskromm fonts"
