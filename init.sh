@@ -17,6 +17,7 @@ echo "Installing and upgrading Brew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew upgrade
+brew tap caskroom/versions
 
 echo "Configuring GPG"
 mkdir -p ~/.gnupg
@@ -37,6 +38,9 @@ brew install gettext
 brew install openssl 
 brew install freetype  
 brew install zlib
+brew cask install java8
+brew install ccache
+brew cask install android-studio
 fi
 
 echo "Install interpreters"
@@ -86,7 +90,7 @@ brew cask install sourcetree
 brew cask install bettertouchtool
 fi
 
-echo "Install Brew caskromm fonts"
+echo "Install Brew caskroom fonts"
 brew tap caskroom/fonts
 
 echo "Install Cloud's CLI"
