@@ -21,7 +21,9 @@ brew tap caskroom/versions
 
 echo "Configuring GPG"
 mkdir -p ~/.gnupg
-brew install gpg gpg-agent pinentry-mac
+brew install gpg
+brew install gpg-agent
+brew install pinentry-mac
 echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 echo "no-tty" >> ~/.gnupg/gpg.conf
 gpgconf --kill gpg-agent
