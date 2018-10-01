@@ -5,8 +5,6 @@
 	name = Flavio De Stefano
 	email = destefano.flavio@gmail.com
    signingkey = D982268E
-   #name = Flavio De Stefano
-   #email = flavio.destefano@caffeina.com
 
 [commit]
 	template = /Users/flavio.destefano/.stCommitMsg

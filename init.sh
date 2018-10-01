@@ -1,5 +1,7 @@
 #!/bin/bash
+
 set -x
+
 ME=`whoami`
 
 # Ask for the administrator password upfront
