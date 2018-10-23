@@ -14,8 +14,7 @@
         },
         "sourceType": "module"
     },
-    "plugins": [
-    ],
+    "plugins": [],
     "rules": {
         "linebreak-style": [
             "error",
@@ -31,6 +30,7 @@
         ],
         "no-unused-vars": [
             "warn"
-        ]
+        ],
+        "no-console": "off"
     }
 }

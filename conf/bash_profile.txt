@@ -12,9 +12,14 @@ alias dcu='docker-compose up --build'
 alias dcud='docker-compose up -d --build'
 alias dkill='docker ps -q | xargs docker kill'
 
-gdelbranch() {
+g-del-branch() {
     git branch -d $1 &&
     git push origin --delete $1
+}
+
+g-del-alltags() {
+    git tag -l | xargs -n 1 git push --delete origin &&
+    git tag | xargs git tag -d
 }
 
 gam() {
@@ -34,14 +39,14 @@ neftojpg() {
     find . -name "*.NEF" -print0 | xargs -0 -P 4 -I file sips -s format jpeg file --out JPG/file.jpg
 }
 
-npmver() {
+npm-ver() {
     npm version "$1" &&
     npm publish &&
     git push &&
     git push --tags
 }
 
-tor_enable_proxy() {
+tor-enable-proxy() {
     # 'Wi-Fi' or 'Ethernet' or 'Display Ethernet'
     INTERFACE=$1
     if [ -z $INTERFACE ]; then
@@ -74,6 +79,26 @@ tor_enable_proxy() {
     echo "$(tput sgr0)" # color reset
 
     tor
+}
+
+backup-repos() {
+	for i in $(find . -type d -maxdepth 1 -mindepth 1); do 
+		echo "Looking in $i..."
+		if [ -d "$i/.git" ]; then
+			echo "Found repository in $i, init backup..."
+			pushd $i > /dev/null
+			zip_name="$i-$(date +'%y%m%d').zip"
+			zip_path="/opt/backups/$zip_name"
+			echo "ZIP path: $zip_path"
+			if [ ! -f "$zip_path" ]; then
+				echo "Backing up..."
+				git archive --format=zip --output="$zip_path" master
+			else
+				echo "ZIP $zip_path already exists, ignoring!"
+			fi
+			popd > /dev/null
+		fi
+	done
 }
 
 # Variables
@@ -115,5 +140,5 @@ export PATH
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm

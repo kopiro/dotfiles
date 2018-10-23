@@ -16,7 +16,7 @@
    helper = osxkeychain
 
 [core]
-	excludesfile = /Users/flavio.destefano/.gitignore_global
+	excludesfile = /Users/kopiro/.gitignore_global
    ignorecase = false
 
 [filter "lfs"]
