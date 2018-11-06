@@ -7,78 +7,101 @@ plugins=(git osx jsontools last-working-dir npm sublime zsh-syntax-highlighting 
 export BASH_IT_THEME=zork
 
 # Aliases
-alias dc='docker-compose'
-alias dcu='docker-compose up --build'
-alias dcud='docker-compose up -d --build'
-alias dkill='docker ps -q | xargs docker kill'
+
+alias dc="docker-compose"
+alias dcu="docker-compose up --build"
+alias dcud="docker-compose up -d --build"
+
+dkill() {
+	# Kill all running containers
+	docker ps -q | xargs docker kill
+}
+
+dprune() {
+	# Prune unused objects
+	docker system prune --all --force
+}
+
+drm() {
+	# Remove everything in docker (including volumes)
+	docker stop $(docker container ls -a -q)
+	docker system prune -a -f --volumes
+}
 
 g-del-branch() {
-    git branch -d $1 &&
-    git push origin --delete $1
+	# Delete a branch locally and remotely
+   git branch -d $1 &&
+   git push origin --delete $1
 }
 
 g-del-alltags() {
-    git tag -l | xargs -n 1 git push --delete origin &&
-    git tag | xargs git tag -d
+	# Delete all GIT tags locally and remotely
+   git tag -l | xargs -n 1 git push --delete origin &&
+   git tag | xargs git tag -d
 }
 
 gam() {
-    git add -A && 
-    git commit --amend && 
-    git push -f
+	# Commit and push everything forcely
+   git add -A && 
+   git commit --amend && 
+   git push -f
 }
 
 got() {
-    git add -A &&
-    git commit -m "$1" &&
-    git push
+	# Commit and push everything
+   git add -A &&
+   git commit -m "$1" &&
+   git push
 }
 
-neftojpg() {
-    mkdir -p JPG
-    find . -name "*.NEF" -print0 | xargs -0 -P 4 -I file sips -s format jpeg file --out JPG/file.jpg
+nef-to-jpg() {
+	# Find all NEF in current directory and convert into JPG using all processors
+   mkdir -p ./JPG
+   find . -name "*.NEF" -print0 | xargs -0 -P $(sysctl -n hw.ncpu) -I file sips -s format jpeg file --out ./JPG/file.jpg
 }
 
 npm-ver() {
-    npm version "$1" &&
-    npm publish &&
-    git push &&
-    git push --tags
+	# Do a npm version $1 and publish over NPM and GIT
+   npm version "$1" &&
+   npm publish &&
+   git push &&
+   git push --tags
 }
 
 tor-enable-proxy() {
-    # 'Wi-Fi' or 'Ethernet' or 'Display Ethernet'
-    INTERFACE=$1
-    if [ -z $INTERFACE ]; then
-        INTERFACE="Wi-Fi"
-    fi
+	# Start tor and configure network to proxy over TOR
+   # 'Wi-Fi' or 'Ethernet' or 'Display Ethernet'
+	INTERFACE=$1
+	if [ -z $INTERFACE ]; then
+	INTERFACE="Wi-Fi"
+	fi
 
-    # Ask for the administrator password upfront
-    sudo -v
+	# Ask for the administrator password upfront
+	sudo -v
 
-    # Keep-alive: update existing `sudo` time stamp until finished
-    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+	# Keep-alive: update existing `sudo` time stamp until finished
+	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-    # trap ctrl-c and call disable_proxy()
-    function disable_proxy() {
-        sudo networksetup -setsocksfirewallproxystate $INTERFACE off
-        echo "$(tput setaf 64)" #green
-        echo "SOCKS proxy disabled."
-        echo "$(tput sgr0)" # color reset
-    }
-    trap disable_proxy INT
+	# trap ctrl-c and call disable_proxy()
+	function disable_proxy() {
+		sudo networksetup -setsocksfirewallproxystate $INTERFACE off
+		echo "$(tput setaf 64)" #green
+		echo "SOCKS proxy disabled."
+		echo "$(tput sgr0)" # color reset
+	}
+	trap disable_proxy INT
 
-    # Let's roll
-    sudo networksetup -setsocksfirewallproxy $INTERFACE 127.0.0.1 9050 off
-    sudo networksetup -setsocksfirewallproxystate $INTERFACE on
+	# Let's roll
+	sudo networksetup -setsocksfirewallproxy $INTERFACE 127.0.0.1 9050 off
+	sudo networksetup -setsocksfirewallproxystate $INTERFACE on
 
-    echo "$(tput setaf 64)" # green
-    echo "SOCKS proxy 127.0.0.1:9050 enabled."
-    echo "$(tput setaf 136)" # orange
-    echo "Starting Tor..."
-    echo "$(tput sgr0)" # color reset
+	echo "$(tput setaf 64)" # green
+	echo "SOCKS proxy 127.0.0.1:9050 enabled."
+	echo "$(tput setaf 136)" # orange
+	echo "Starting Tor..."
+	echo "$(tput sgr0)" # color reset
 
-    tor
+	tor
 }
 
 backup-repos() {
@@ -100,6 +123,15 @@ backup-repos() {
 		fi
 	done
 }
+
+git-gh() {
+	git checkout gh-pages && \
+	git fetch --all && \
+	git reset --hard origin/master && \
+	git push -f
+}
+
+
 
 # Variables
 export CC="gcc"
