@@ -96,6 +96,7 @@ fi
 
 echo "Install Brew caskroom fonts"
 brew tap caskroom/fonts
+brew cask install font-iosevka
 
 echo "Install Cloud's CLI"
 brew install awscli
