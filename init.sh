@@ -102,6 +102,9 @@ echo "Install Cloud's CLI"
 brew install awscli
 brew cask install google-cloud-sdk
 
+echo "Installing other tools"
+npm install -g fx
+
 echo "Cleaning Brew"
 brew cleanup
 brew cask cleanup

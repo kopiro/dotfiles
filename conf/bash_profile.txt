@@ -3,9 +3,6 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME=gnzh
 plugins=(git osx jsontools last-working-dir npm sublime zsh-syntax-highlighting colored-man colorize)
 
-# BASH-IT things
-export BASH_IT_THEME=zork
-
 # Aliases
 
 alias dc="docker-compose"
@@ -130,8 +127,6 @@ git-gh() {
 	git reset --hard origin/master && \
 	git push -f
 }
-
-
 
 # Variables
 export CC="gcc"
