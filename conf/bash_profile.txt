@@ -47,14 +47,14 @@ gam() {
 got() {
 	# Commit everything
    git add -A &&
-   git commit -m "$1" &&
+   git commit -m "$1"
 }
 
 gush() {
 	# Commit and push everything
 	git add -A &&
 	git commit -m "$1" &&
-	git push -f
+	git push
 }
 
 nef-to-jpg() {
