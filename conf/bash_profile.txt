@@ -45,10 +45,16 @@ gam() {
 }
 
 got() {
-	# Commit and push everything
+	# Commit everything
    git add -A &&
    git commit -m "$1" &&
-   git push
+}
+
+gush() {
+	# Commit and push everything
+	git add -A &&
+	git commit -m "$1" &&
+	git push -f
 }
 
 nef-to-jpg() {
