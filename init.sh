@@ -45,6 +45,7 @@ brew install zlib
 brew cask install java8
 brew install ccache
 brew cask install android-studio
+brew install shellcheck
 fi
 
 echo "Install interpreters"
