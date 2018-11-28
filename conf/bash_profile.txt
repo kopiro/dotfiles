@@ -172,7 +172,15 @@ PATH=$PATH:/sbin
 export PATH
 
 # iTerm shell integration
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+test -e ~/.iterm2_shell_integration.zsh && source ~/.iterm2_shell_integration.zsh
+
+if [[ $(date +"%d%m") =~ ^2[4-6]12$ ]]; then   
+  echo "Merry Christmas 🎅"  
+fi
+
+if [ $(date +"%A") = "Sunday" ]; then
+	echo "Oh... com'on 😰, it's Sunday, go back to sleep! 🛌"
+fi
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
