@@ -1,13 +1,30 @@
 # ZSH things
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="rkj-repos"
-plugins=(git osx jsontools last-working-dir npm sublime zsh-syntax-highlighting colored-man colorize)
+ZSH_THEME='rkj-repos'
+plugins=(
+	gitfast 
+	osx 
+	jsontools 
+	last-working-dir 
+	npm 
+	zsh-syntax-highlighting 
+	colored-man 
+	colorize 
+	common-aliases 
+	brew 
+	copyfile 
+	docker 
+	encode64
+	sudo
+	vscode
+	z
+	alias-tips
+)
 
 # Aliases
-
-alias dc="docker-compose"
-alias dcu="docker-compose up --build"
-alias dcud="docker-compose up -d --build"
+alias d='docker'
+alias dc='docker-compose'
+alias dcu='docker-compose up --build'
 
 dkill() {
 	# Kill all running containers
@@ -19,19 +36,19 @@ dprune() {
 	docker system prune --all --force
 }
 
-drm() {
+derase() {
 	# Remove everything in docker (including volumes)
 	docker stop $(docker container ls -a -q)
 	docker system prune -a -f --volumes
 }
 
-g-del-branch() {
+gdelbranch() {
 	# Delete a branch locally and remotely
    git branch -d $1 &&
    git push origin --delete $1
 }
 
-g-del-alltags() {
+gerasetags() {
 	# Delete all GIT tags locally and remotely
    git tag -l | xargs -n 1 git push --delete origin &&
    git tag | xargs git tag -d
@@ -57,13 +74,13 @@ gush() {
 	git push
 }
 
-nef-to-jpg() {
+neftojpg() {
 	# Find all NEF in current directory and convert into JPG using all processors
    mkdir -p ./JPG
    find . -name "*.NEF" -print0 | xargs -0 -P $(sysctl -n hw.ncpu) -I file sips -s format jpeg file --out ./JPG/file.jpg
 }
 
-npm-ver() {
+npmver() {
 	# Do a npm version $1 and publish over NPM and GIT
    npm version "$1" &&
    npm publish &&
@@ -125,13 +142,6 @@ backup-repos() {
 			popd > /dev/null
 		fi
 	done
-}
-
-git-gh() {
-	git checkout gh-pages && \
-	git fetch --all && \
-	git reset --hard origin/master && \
-	git push -f
 }
 
 # Variables
