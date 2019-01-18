@@ -46,6 +46,7 @@ brew cask install java8
 brew install ccache
 brew cask install android-studio
 brew install shellcheck
+brew install telnet
 fi
 
 echo "Install interpreters"
