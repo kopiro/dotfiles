@@ -47,6 +47,8 @@ brew install ccache
 brew cask install android-studio
 brew install shellcheck
 brew install telnet
+brew install composer
+brew install php-code-sniffer
 fi
 
 echo "Install interpreters"
