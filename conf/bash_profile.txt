@@ -21,7 +21,6 @@ plugins=(
 	alias-tips
 )
 
-alias d='docker'
 alias dc='docker-compose'
 alias dcu='docker-compose up --build'
 
@@ -69,11 +68,9 @@ npmver() {
 }
 
 tor-enable-proxy() {
-	# Start tor and configure network to proxy over TOR
-   # 'Wi-Fi' or 'Ethernet' or 'Display Ethernet'
 	INTERFACE=$1
 	if [ -z $INTERFACE ]; then
-	INTERFACE="Wi-Fi"
+		INTERFACE="Wi-Fi"
 	fi
 
 	# Ask for the administrator password upfront
