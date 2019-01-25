@@ -97,6 +97,7 @@ brew cask install fantastical
 brew cask install sourcetree
 brew cask install bettertouchtool
 brew cask install little-snitch
+brew cask install xquartz
 fi
 
 echo "Install Brew caskroom fonts"
