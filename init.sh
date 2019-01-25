@@ -49,6 +49,7 @@ brew install shellcheck
 brew install telnet
 brew install composer
 brew install php-code-sniffer
+brew install socat
 fi
 
 echo "Install interpreters"

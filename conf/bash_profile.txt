@@ -21,54 +21,34 @@ plugins=(
 	alias-tips
 )
 
-# Aliases
 alias d='docker'
 alias dc='docker-compose'
 alias dcu='docker-compose up --build'
 
-dkill() {
-	# Kill all running containers
-	docker ps -q | xargs docker kill
-}
+alias d-kill='docker ps -q | xargs docker kill'
+alias d-prune='docker system prune --all --force'
+alias d-erase='docker stop $(docker container ls -a -q); docker system prune -a -f --volumes'
 
-dprune() {
-	# Prune unused objects
-	docker system prune --all --force
-}
+alias socat-x11='open -a XQuartz && socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
+alias kali-sh='docker run -it --rm --net=host --privileged -e DISPLAY -v $HOME/.Xauthority:/root/.Xauthority -v $HOME/Kali:/root/shared booyaabes/kali-linux-full /bin/bash'
 
-derase() {
-	# Remove everything in docker (including volumes)
-	docker stop $(docker container ls -a -q)
-	docker system prune -a -f --volumes
-}
-
-gdelbranch() {
-	# Delete a branch locally and remotely
-   git branch -d $1 &&
-   git push origin --delete $1
-}
-
-gerasetags() {
-	# Delete all GIT tags locally and remotely
-   git tag -l | xargs -n 1 git push --delete origin &&
-   git tag | xargs git tag -d
+burpsuite() {
+	socat-x11 &
+	docker run -it --rm -e DISPLAY=$(ifconfig en0 | grep "inet " | cut -d " " -f 2):0 -v $HOME/.Xauthority:/root/.Xauthority --net=host booyaabes/kali-linux-full java -jar /usr/bin/burpsuite
 }
 
 gam() {
-	# Commit and push everything forcely
    git add -A && 
    git commit --amend && 
    git push -f
 }
 
 got() {
-	# Commit everything
    git add -A &&
    git commit -m "$1"
 }
 
 gush() {
-	# Commit and push everything
 	git add -A &&
 	git commit -m "$1" &&
 	git push
@@ -76,16 +56,16 @@ gush() {
 
 neftojpg() {
 	# Find all NEF in current directory and convert into JPG using all processors
-   mkdir -p ./JPG
-   find . -name "*.NEF" -print0 | xargs -0 -P $(sysctl -n hw.ncpu) -I file sips -s format jpeg file --out ./JPG/file.jpg
+ 	mkdir -p ./JPG
+ 	find . -name "*.NEF" -print0 | xargs -0 -P $(sysctl -n hw.ncpu) -I file sips -s format jpeg file --out ./JPG/file.jpg
 }
 
 npmver() {
 	# Do a npm version $1 and publish over NPM and GIT
-   npm version "$1" &&
-   npm publish &&
-   git push &&
-   git push --tags
+   	npm version "$1" &&
+   	npm publish &&
+   	git push &&
+   	git push --tags
 }
 
 tor-enable-proxy() {
@@ -164,6 +144,8 @@ export NDK_CCACHE=/usr/local/bin/ccache
 export NUM_CPUS=8
 export NODE_ENV=development
 export USE_SDK_WRAPPER=1
+
+export EN0_IP=$(ifconfig en0 | grep "inet " | cut -d " " -f 2)
 
 # Path
 PATH=''
