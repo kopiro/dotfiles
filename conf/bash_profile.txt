@@ -29,11 +29,29 @@ alias d-prune='docker system prune --all --force'
 alias d-erase='docker stop $(docker container ls -a -q); docker system prune -a -f --volumes'
 
 alias socat-x11='open -a XQuartz && socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
-alias kali-sh='docker run -it --rm --net=host --privileged -v $HOME/Kali:/root booyaabes/kali-linux-full /bin/bash'
 
-burpsuite() {
-	socat-x11 &
-	docker run -it --rm -e DISPLAY=$(ifconfig en0 | grep "inet " | cut -d " " -f 2):0 -v $HOME/.Xauthority:/root/.Xauthority --net=host booyaabes/kali-linux-full java -jar /usr/bin/burpsuite
+kali-sh() {
+	docker run \
+	--privileged \
+	-it \
+	--net=host \
+	-v $HOME/Kali:/root \
+	booyaabes/kali-linux-full \
+	/bin/bash
+}
+
+kali-desktop() {
+	open -a XQuartz
+	socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
+	docker run \
+	--privileged \
+	-it \
+	-e DISPLAY=$(ifconfig en0 | grep "inet " | cut -d " " -f 2):0 \
+	-v $HOME/Kali:/root \
+	-v $HOME/.Xauthority:/root/.Xauthority \
+	--net=host \
+	booyaabes/kali-linux-full \
+	/bin/bash
 }
 
 gam() {
