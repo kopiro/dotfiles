@@ -46,10 +46,10 @@ kali-desktop() {
 	docker run \
 	--privileged \
 	-it \
+	--net=host \
 	-e DISPLAY=$(ifconfig en0 | grep "inet " | cut -d " " -f 2):0 \
 	-v $HOME/Kali:/root \
 	-v $HOME/.Xauthority:/root/.Xauthority \
-	--net=host \
 	booyaabes/kali-linux-full \
 	/bin/bash
 }
