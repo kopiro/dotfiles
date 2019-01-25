@@ -29,7 +29,7 @@ alias d-prune='docker system prune --all --force'
 alias d-erase='docker stop $(docker container ls -a -q); docker system prune -a -f --volumes'
 
 alias socat-x11='open -a XQuartz && socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
-alias kali-sh='docker run -it --rm --net=host --privileged -e DISPLAY -v $HOME/.Xauthority:/root/.Xauthority -v $HOME/Kali:/root/shared booyaabes/kali-linux-full /bin/bash'
+alias kali-sh='docker run -it --rm --net=host --privileged -v $HOME/Kali:/root booyaabes/kali-linux-full /bin/bash'
 
 burpsuite() {
 	socat-x11 &
