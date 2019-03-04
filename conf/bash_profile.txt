@@ -2,6 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME='rkj-repos'
 plugins=(
+        sublime
 	gitfast 
 	osx 
 	jsontools 
@@ -15,11 +16,12 @@ plugins=(
 	copyfile 
 	docker 
 	encode64
-	sudo
-	vscode
+	sudo	
 	z
 	alias-tips
 )
+
+alias dotenv='export $(cat .env | xargs)'
 
 alias dc='docker-compose'
 alias dcu='docker-compose up --build'
