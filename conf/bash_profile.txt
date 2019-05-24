@@ -1,24 +1,24 @@
 # ZSH things
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME='rkj-repos'
+ZSH_THEME=robbyrussell
 plugins=(
-        sublime
-	gitfast 
-	osx 
-	jsontools 
-	last-working-dir 
-	npm 
-	zsh-syntax-highlighting 
-	colored-man 
-	colorize 
-	common-aliases 
-	brew 
-	copyfile 
-	docker 
-	encode64
-	sudo	
-	z
-	alias-tips
+    gitfast 
+    osx 
+    jsontools 
+    last-working-dir 
+    npm 
+    zsh-syntax-highlighting 
+    colored-man 
+    colorize 
+    common-aliases 
+    brew 
+    copyfile 
+    docker 
+    encode64
+    sudo
+    z
+    alias-tips
+    vscode
 )
 
 alias dotenv='export $(cat .env | xargs)'
@@ -31,30 +31,8 @@ alias d-prune='docker system prune --all --force'
 alias d-erase='docker stop $(docker container ls -a -q); docker system prune -a -f --volumes'
 
 alias socat-x11='open -a XQuartz && socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
-
-kali-sh() {
-	docker run \
-	--privileged \
-	-it \
-	--net=host \
-	-v $HOME/Kali:/root \
-	booyaabes/kali-linux-full \
-	/bin/bash
-}
-
-kali-desktop() {
-	open -a XQuartz
-	socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
-	docker run \
-	--privileged \
-	-it \
-	--net=host \
-	-e DISPLAY=$(ifconfig en0 | grep "inet " | cut -d " " -f 2):0 \
-	-v $HOME/Kali:/root \
-	-v $HOME/.Xauthority:/root/.Xauthority \
-	booyaabes/kali-linux-full \
-	/bin/bash
-}
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+alias chrome-debug="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222"
 
 gam() {
    git add -A && 
