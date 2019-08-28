@@ -50,6 +50,7 @@ brew install telnet
 brew install composer
 brew install php-code-sniffer
 brew install socat
+brew install rmtrash
 fi
 
 echo "Install interpreters"

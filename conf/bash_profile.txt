@@ -21,23 +21,36 @@ plugins=(
     vscode
 )
 
+alias please='sudo'
+
 alias dotenv='export $(cat .env | xargs)'
 
 alias dc='docker-compose'
-alias dcu='docker-compose up --build'
-
-alias d-kill='docker ps -q | xargs docker kill'
-alias d-prune='docker system prune --all --force'
-alias d-erase='docker stop $(docker container ls -a -q); docker system prune -a -f --volumes'
+alias dcu='docker-compose up'
+alias dcub='docker-compose up --build'
+alias dkill='docker rm -f $(docker container ls -aq)'
+alias derase='docker system prune --all --force --volumes'
 
 alias socat-x11='open -a XQuartz && socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 alias chrome-debug="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222"
 
+ip() {
+	ifconfig en0 | grep "inet " | cut -d " " -f 2
+}
+
+whatbranch() {
+	git rev-parse --abbrev-ref HEAD 2>/dev/null
+}
+
 gam() {
-   git add -A && 
-   git commit --amend && 
-   git push -f
+	branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+	if [ "$branch" = "master" ]; then
+		echo "Sorry, I can't do this when you're on master"
+		exit 1
+	fi
+	git commit -n --amend && 
+	git push -f
 }
 
 got() {
@@ -51,20 +64,27 @@ gush() {
 	git push
 }
 
+gull() {
+	git pull &&
+	git submodule sync --recursive && 
+	git submodule update --init --recursive
+}
+
+# Find all NEF in current directory and convert into JPG using all processors
 neftojpg() {
-	# Find all NEF in current directory and convert into JPG using all processors
  	mkdir -p ./JPG
  	find . -name "*.NEF" -print0 | xargs -0 -P $(sysctl -n hw.ncpu) -I file sips -s format jpeg file --out ./JPG/file.jpg
 }
 
+# Do a npm version $1 and publish over NPM and GIT
 npmver() {
-	# Do a npm version $1 and publish over NPM and GIT
    	npm version "$1" &&
    	npm publish &&
    	git push &&
    	git push --tags
 }
 
+# Enable TOR proxy system wide
 tor-enable-proxy() {
 	INTERFACE=$1
 	if [ -z $INTERFACE ]; then
@@ -99,6 +119,7 @@ tor-enable-proxy() {
 	tor
 }
 
+# Backup all repositories in a root direectory in a GZIP
 backup-repos() {
 	for i in $(find . -type d -maxdepth 1 -mindepth 1); do 
 		echo "Looking in $i..."
@@ -119,12 +140,16 @@ backup-repos() {
 	done
 }
 
+# Spawn a simple HTTP server
 http-server() {
-    open 'http://localhost:8000'
+	port=${1:=8080}
+    open "https://localhost:${port}"
     python3 -m SimpleHTTPServer
 }
 
+# Spawn a simple HTTPS server
 https-server() {
+	port=${1:=8443}
     if [ ! -f /tmp/server.crt ]; then
         openssl genrsa -aes256 -passout pass:password -out /tmp/server.key 2048
         openssl req -new -key /tmp/server.key -passin pass:password -out /tmp/server.csr
@@ -134,9 +159,43 @@ https-server() {
         cat /tmp/server.crt /tmp/server.key > server.pem
     fi
     pip install twisted pyOpenSSL
-    open 'https://localhost:4443'
-    twistd -no web --path . --https=4443 -c /tmp/server.crt -k /tmp/server.key
+    open "https://localhost:${port}"
+    twistd -no web --path . --https=${port} -c /tmp/server.crt -k /tmp/server.key
 }
+
+work-start() {
+	if [ -z "$1" ]; then
+		echo "Please specify an issue: work-start 1234"
+		return
+	fi
+	issue="$JIRA_PREFIX-$1"
+	git checkout master &&
+	git pull origin master &&
+	git checkout -b "$issue" &&
+	jira assign "$issue" "$(whoami)" &&
+	jira in-progress "$issue" &&
+	jira view "$issue"
+}
+
+work-review() {
+	jira transition "Review" "$(whatbranch)" &&
+	git open
+}
+
+work-done() {
+	jira done "$(whatbranch)"
+}
+
+# iTerm shell integration
+test -e ~/.iterm2_shell_integration.zsh && source ~/.iterm2_shell_integration.zsh
+
+if [[ $(date +"%d%m") =~ ^2[4-6]12$ ]]; then   
+  echo "Merry Christmas 🎅"  
+fi
+
+if [ "$(date +"%A")" = "Sunday" ]; then
+	echo "Oh... com'on 😰, it's Sunday, go back to sleep! 🛌"
+fi
 
 # Variables
 export CC="gcc"
@@ -158,8 +217,11 @@ export NDK_CCACHE=/usr/local/bin/ccache
 export NUM_CPUS=8
 export NODE_ENV=development
 export USE_SDK_WRAPPER=1
+export JIRA_PREFIX="HYP"
 
-export EN0_IP=$(ifconfig en0 | grep "inet " | cut -d " " -f 2)
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
 # Path
 PATH=''
@@ -176,18 +238,3 @@ PATH=$PATH:/usr/sbin
 PATH=$PATH:/bin
 PATH=$PATH:/sbin
 export PATH
-
-# iTerm shell integration
-test -e ~/.iterm2_shell_integration.zsh && source ~/.iterm2_shell_integration.zsh
-
-if [[ $(date +"%d%m") =~ ^2[4-6]12$ ]]; then   
-  echo "Merry Christmas 🎅"  
-fi
-
-if [ $(date +"%A") = "Sunday" ]; then
-	echo "Oh... com'on 😰, it's Sunday, go back to sleep! 🛌"
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
