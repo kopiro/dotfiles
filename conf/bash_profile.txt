@@ -50,7 +50,7 @@ gam() {
 		exit 1
 	fi
 	git commit -n --amend && 
-	git push -f
+	git push --force-with-lease
 }
 
 got() {
