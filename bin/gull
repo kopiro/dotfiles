@@ -1,0 +1,8 @@
+#!/bin/bash
+# Pull everything including submodules
+set -e
+
+git fetch --all
+git pull
+git submodule sync --recursive
+git submodule update --init --recursive

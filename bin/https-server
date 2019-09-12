@@ -1,0 +1,18 @@
+#!/bin/bash
+
+port=${1:=8443}
+
+if [ ! -f /tmp/server.crt ]; then
+    openssl genrsa -aes256 -passout pass:password -out /tmp/server.key 2048
+    openssl req -new -key /tmp/server.key -passin pass:password -out /tmp/server.csr
+    openssl x509 -req -passin pass:password -days 1024 -in /tmp/server.csr -signkey /tmp/server.key -out /tmp/server.crt
+    openssl rsa -in /tmp/server.key -out /tmp/server_no_pass.key -passin pass:password
+    mv /tmp/server_no_pass.key /tmp/server.key
+    cat /tmp/server.crt /tmp/server.key > server.pem
+fi
+
+pip install twisted pyOpenSSL
+
+open "https://localhost:${port}"
+
+twistd -no web --path . --https=${port} -c /tmp/server.crt -k /tmp/server.key

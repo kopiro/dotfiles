@@ -1,0 +1,4 @@
+#!/bin/bash
+# Find all NEF in current directory and convert into JPG using all processors
+mkdir -p ./JPG
+find . -name "*.NEF" -print0 | xargs -0 -P $(sysctl -n hw.ncpu) -I file sips -s format jpeg file --out ./JPG/file.jpg

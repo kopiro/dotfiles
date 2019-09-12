@@ -1,0 +1,4 @@
+#!/bin/bash
+port=${1:=8080}
+open "https://localhost:${port}"
+python3 -m SimpleHTTPServer

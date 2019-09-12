@@ -1,0 +1,9 @@
+#!/bin/bash
+# Do a npm version $1 and publish over NPM and GIT
+set -e
+
+npm version "$1"
+npm publish
+
+git push
+git push --tags
