@@ -20,13 +20,7 @@ vscl level code --log level Log level to use. Default is 'info'. Allowed values 
 vsced code --disable-extensions Disable all installed extensions.
 ```
 
-# sudo
-
-ESC twice: Puts sudo in front of the current command, or the last one if the command line is empty.
-
 # copyfile
-
-Copies content of a file into clipboard
 
 ```
 copyfile index.php
