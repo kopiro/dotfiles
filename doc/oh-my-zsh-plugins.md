@@ -1,4 +1,4 @@
-#vscode
+# vscode
 
 Common aliases:
 Alias Command Description
