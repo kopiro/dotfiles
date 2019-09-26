@@ -6,6 +6,8 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Configuring base directories..."
+
+# Create project directory
 mkdir -p ~/Projects
 
 # Make me owner of /opt
@@ -17,55 +19,170 @@ chmod +x /opt/dotfiles/bin/*
 
 echo "Installing and upgrading Brew"
 [ -s "/usr/local/bin/brew" ] || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew update
-brew upgrade
-brew tap caskroom/cask
-brew tap caskroom/versions
-brew tap buo/cask-upgrade
-
-echo "Install base dependencies"
-# dependencies for Formulas and Casks
-dependencies=(
-  java
-  xquartz
+brew_taps=(
+  'buo/cask-upgrade'
+  'caskroom/cask'
+  'caskroom/versions'
+  'homebrew/bundle'
+  'homebrew/core'
 )
-for app in "${dependencies[@]}"; do
-  brew cask install --appdir="/Applications" "$app" --force
+for tap in "${brew_taps[@]}"; do
+    brew tap "$tap"
 done
+
+# Update to reflect taps
+brew update
 
 echo "Configuring GPG"
 mkdir -p ~/.gnupg
-brew install gpg gpg-agent pinentry-mac
-grep "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+brew install gpg pinentry-mac
+brew link --overwrite gnupg
+grep "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 grep "no-tty"  ~/.gnupg/gpg.conf || echo "no-tty" >> ~/.gnupg/gpg.conf
-gpgconf --kill gpg-agent
 
 echo "Install Brew's software base"
 brew_apps=(
+    # GNU
+    coreutils
     findutils
+    git
+    inetutils
     moreutils
+    openssl 
+    socat
     wget
+    # Compilation
     autoconf
+    freetype  
+    ccache
+    # Image
     imagemagick
     graphicsmagick
+    # Video
     ffmpeg
+    # iPhone
+    ideviceinstaller
     libimobiledevice
+    # Lang
     gettext 
-    openssl 
-    freetype  
+    # Compression
     zlib
-    ccache
+    # Interpreters
+    php
+    python
+    go
+    # Linters
     shellcheck
-    telnet
-    composer
     php-code-sniffer
-    socat
+    # Installers
+    composer
+    yarn
+    # Shell / CLI
+    autojump
     rmtrash
     terminal-notifier
-    autojump
+    # Security
+    sqlmap
+    nmap
+    # Tools
+    geoip
+    htop
+    mas
+    midnight-commander
+    ripgrep
+    sqlite
+    tldr
+    wifi-password
+    youtube-dl
 )
 for app in "${brew_apps[@]}"; do
     brew install "$app"
+done
+
+echo "Install Cask base"
+cask_apps=(
+    # Interpreters / Frameworks
+    java
+    java8
+    xquartz
+    # Programming
+    charles
+    intellij-idea
+    iterm2
+    sequel-pro
+    sublime-text
+    visual-studio-code
+    # Browsers
+    chromium
+    firefox
+    google-chrome
+    opera
+    tor-browser
+    # Chat
+    slack
+    telegram
+    # Generic
+    1password
+    1password-cli
+    alfred
+    cakebrew
+    dash
+    disk-inventory-x
+    geekbench
+    github
+    google-backup-and-sync
+    google-cloud-sdk
+    google-drive-file-stream
+    google-hangouts
+    hex-fiend
+    little-snitch
+    notion
+    poedit
+    postman
+    sketch
+    spotify
+    sqlpro-for-sqlite
+    the-unarchiver
+    transmission
+    transmit
+    tunnelblick
+    vlc
+    vmware-fusion8
+    wireshark
+    # Finder addons
+    provisionql
+    qlcolorcode
+    qlimagesize
+    qlmarkdown
+    qlprettypatch
+    qlstephen
+    qlvideo
+    quicklook-csv
+    quicklook-json 
+    quicklookase
+    suspicious-package
+    webpquicklook
+)
+
+for app in "${cask_apps[@]}"; do
+  brew cask install "$app"
+done
+
+echo "Install MAS's apps"
+brew install mas
+mas_apps=(
+    '497799835' # Xcode
+    '441258766' # Magnet
+    '409183694' # Keynote
+    '408981434' # iMovie
+    '597790822' # SSH Proxy
+    '734418810' # SSH Tunnel
+    '682658836' # GarageBand
+    '409203825' # Numbers
+)
+
+for app in "${mas_apps[@]}"; do
+  mas install "$app"
 done
 
 echo "Installing NVM"
@@ -76,65 +193,7 @@ mkdir -p "$NVM_DIR"
 nvm install stable
 nvm alias default stable
 
-echo "Install Cask base"
-cask_apps=(
-    tunnelblick
-    vlc
-    slack
-    alfred
-    telegram
-    sublime-text
-    visual-studio-code
-    iterm2
-    the-unarchiver
-    dash
-    google-chrome
-    transmit
-    1password
-    sequel-pro
-    spotify
-    firefox
-    intellij-idea
-    google-drive-file-stream
-    google-backup-and-sync
-    tor-browser
-    charles
-    notion
-    gpgtools
-    sqlpro-for-sqlite
-    transmission
-    sketch
-    poedit
-    hex-fiend
-    github
-    little-snitch
-    postman
-    google-hangouts
-    wireshark
-    google-cloud-sdk
-    provisionql
-    quicklookase
-    quicklook-json 
-    quicklook-csv
-    qlcolorcode
-    qlimagesize
-    qlmarkdown
-    qlprettypatch
-    qlstephen
-    qlvideo
-    webpquicklook
-    suspicious-package
-    geekbench
-    disk-inventory-x
-    vmware-fusion8
-)
-
-for app in "${cask_apps[@]}"; do
-  brew cask install --appdir="/Applications" "$app" --force
-done
-
 echo "Cleaning Brew"
 brew cleanup
-brew cask cleanup
 
 echo "Goodbye!"
