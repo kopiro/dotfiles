@@ -33,13 +33,6 @@ done
 # Update to reflect taps
 brew update
 
-echo "Configuring GPG"
-mkdir -p ~/.gnupg
-brew install gpg pinentry-mac
-brew link --overwrite gnupg
-grep "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
-grep "no-tty"  ~/.gnupg/gpg.conf || echo "no-tty" >> ~/.gnupg/gpg.conf
-
 echo "Install Brew's software base"
 brew_apps=(
     # GNU
@@ -192,6 +185,13 @@ mkdir -p "$NVM_DIR"
 . /usr/local/opt/nvm/nvm.sh
 nvm install stable
 nvm alias default stable
+
+echo "Configuring GPG"
+brew install gpg 
+brew install pinentry-mac
+mkdir -p ~/.gnupg
+grep "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+grep "no-tty"  ~/.gnupg/gpg.conf || echo "no-tty" >> ~/.gnupg/gpg.conf
 
 echo "Cleaning Brew"
 brew cleanup

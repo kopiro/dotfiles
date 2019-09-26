@@ -5,8 +5,6 @@ if [ -z "$1" ]; then
     return
 fi
 
-set -e
-
 issue="$JIRA_PREFIX-$1"
 
 git checkout master

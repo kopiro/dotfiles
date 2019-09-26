@@ -8,5 +8,5 @@ if [ "$branch" = "master" ]; then
     exit 1
 fi
 
-git commit -n --amend
+git commit -n --amend &&
 git push --force-with-lease
