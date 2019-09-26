@@ -128,7 +128,7 @@ Echo your local IP.
 
 ## Aliases
 
-# vscode
+### vscode
 
 ```
 vsc code . Open the current folder in VS code
@@ -147,13 +147,13 @@ vscl level code --log level Log level to use. Default is 'info'. Allowed values 
 vsced code --disable-extensions Disable all installed extensions.
 ```
 
-# copyfile
+### copyfile
 
 ```
 copyfile index.php
 ```
 
-# common-aliases
+### common-aliases
 
 ```
 l ls -lFh
@@ -182,7 +182,7 @@ NUL > /dev/null 2>&1
 P 2>&1| pygmentize -l pytb
 ```
 
-# jsontools
+### jsontools
 
 ```
 pp_json pretty prints json
@@ -191,7 +191,7 @@ urlencode_json returns a url encoded string for the given json
 urldecode_json returns decoded json for the given url encoded string
 ```
 
-# osx
+### osx
 
 ```
 tab Open the current directory in a new tab
@@ -208,7 +208,7 @@ itunes Control iTunes. User itunes -h for usage details
 spotify Control Spotify and search by artist, album, track and etc.
 ```
 
-# git-extras
+### git-extras
 
 ```
 git changelog [-l/--list] populate changelog file with commits since the previous tag
