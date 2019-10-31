@@ -6,8 +6,8 @@ export LC_CTYPE="en_US.UTF-8"
 export LANGUAGE="en"
 export LANG="en"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-export JAVA_HOME=$(/usr/libexec/java_home)
-export BREW_PATH=$(brew --prefix)
+export JAVA_HOME=`/usr/libexec/java_home`
+export BREW_PATH=`brew --prefix`
 export ANDROID_SDK="$HOME/Library/Android/sdk"
 export ANDROID_NDK="/Library/Android/sdk/ndk-bundle"
 export NDK_CCACHE="/usr/local/bin/ccache"
@@ -15,11 +15,13 @@ export NUM_CPUS="8"
 export NODE_ENV="development"
 export DEBUG="true"
 export NVM_DIR="$HOME/.nvm"
-export HOMEBREW_NO_AUTO_UPDATE=true
 
 # Path definition
-PATH=$PATH:/opt/dotfiles/bin # Load my binaries
-PATH=$PATH:"$HOME/.composer/vendor/bin" # Composer global binaries
+PATH=$PATH:/opt/dotfiles/bin
+# Specific bins
+PATH=$PATH:~/.yarn/bin
+PATH=$PATH:~/.config/yarn/global/node_modules/.bin
+PATH=$PATH:~/.composer/vendor/bin # Composer global binaries
 # Android SDK binaries
 PATH=$PATH:"$ANDROID_SDK/tools"
 PATH=$PATH:"$ANDROID_SDK/build-tools"
@@ -35,7 +37,7 @@ PATH=$PATH:/sbin
 export PATH
 
 # ZSH things
-ZSH_THEME="jovial"
+ZSH_THEME="robbyrussell"
 plugins=(
 autojump
 common-aliases
@@ -76,13 +78,3 @@ test -e ~/.iterm2_shell_integration.zsh && . ~/.iterm2_shell_integration.zsh
 # This loads nvm
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
-
-# Just in time messages
-
-if [[ $(date +"%d%m") =~ ^2[4-6]12$ ]]; then   
-  echo "Merry Christmas 🎅"  
-fi
-
-if [ "$(date +"%A")" = "Sunday" ]; then
-	echo "Oh... com'on 😰, it's Sunday, go back to sleep! 🛌"
-fi

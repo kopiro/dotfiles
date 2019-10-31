@@ -5,6 +5,8 @@ ME="$(whoami)"
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+set -x
+
 echo "Configuring base directories..."
 
 # Create project directory
@@ -21,8 +23,6 @@ echo "Installing and upgrading Brew"
 [ -s "/usr/local/bin/brew" ] || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew_taps=(
   'buo/cask-upgrade'
-  'caskroom/cask'
-  'caskroom/versions'
   'homebrew/bundle'
   'homebrew/core'
 )
@@ -44,6 +44,7 @@ brew_apps=(
     openssl 
     socat
     wget
+    grep
     # Compilation
     autoconf
     freetype  
