@@ -1,3 +1,0 @@
-#!/bin/bash
-jira transition "Review" "$(whatbranch)"
-git open

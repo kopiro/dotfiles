@@ -12,8 +12,6 @@ export ANDROID_SDK="$HOME/Library/Android/sdk"
 export ANDROID_NDK="/Library/Android/sdk/ndk-bundle"
 export NDK_CCACHE="/usr/local/bin/ccache"
 export NUM_CPUS="8"
-export NODE_ENV="development"
-export DEBUG="true"
 export NVM_DIR="$HOME/.nvm"
 
 # Path definition
@@ -66,6 +64,8 @@ alias dc='docker-compose'
 alias dcu='docker-compose up'
 alias dcub='docker-compose up --build'
 alias d-kill='docker rm -f $(docker container ls -aq)' # Kill all containers
+alias d-img-prune='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
+alias d-vol-prune='docker volume rm $(docker volume ls -qf dangling=true)'
 alias d-erase='docker system prune --all --force --volumes' # Erase the docker system
 
 # Useful aliases

@@ -1,2 +1,0 @@
-#!/bin/bash
-jira "done" "$(whatbranch)"
