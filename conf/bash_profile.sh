@@ -11,15 +11,12 @@ export BREW_PATH=`brew --prefix`
 export ANDROID_SDK="$HOME/Library/Android/sdk"
 export ANDROID_NDK="/Library/Android/sdk/ndk-bundle"
 export NDK_CCACHE="/usr/local/bin/ccache"
-export NUM_CPUS="8"
-export NVM_DIR="$HOME/.nvm"
 
 # Path definition
-PATH=$PATH:/opt/dotfiles/bin
+PATH=$PATH:~/.dotfiles/bin
 # Specific bins
 PATH=$PATH:~/.yarn/bin
-PATH=$PATH:~/.config/yarn/global/node_modules/.bin
-PATH=$PATH:~/.composer/vendor/bin # Composer global binaries
+PATH=$PATH:~/.composer/vendor/bin
 # Android SDK binaries
 PATH=$PATH:"$ANDROID_SDK/tools"
 PATH=$PATH:"$ANDROID_SDK/build-tools"

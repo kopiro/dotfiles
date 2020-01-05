@@ -9,15 +9,8 @@ set -x
 
 echo "Configuring base directories..."
 
-# Create project directory
-mkdir -p ~/Projects
-
-# Make me owner of /opt
-sudo mkdir -p /opt
-sudo chown -R "$ME":staff /opt
-
 # Make my binaries executables
-chmod +x /opt/dotfiles/bin/*
+chmod +x ./bin/*
 
 echo "Installing and upgrading Brew"
 [ -s "/usr/local/bin/brew" ] || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -44,7 +37,6 @@ brew_apps=(
     openssl 
     socat
     wget
-    grep
     # Compilation
     autoconf
     freetype  
@@ -64,7 +56,7 @@ brew_apps=(
     # Interpreters
     php
     python
-    go
+    node
     # Linters
     shellcheck
     php-code-sniffer
@@ -97,20 +89,16 @@ echo "Install Cask base"
 cask_apps=(
     # Interpreters / Frameworks
     java
-    java8
     xquartz
     # Programming
     charles
-    intellij-idea
     iterm2
     sequel-pro
     sublime-text
     visual-studio-code
     # Browsers
-    chromium
     firefox
     google-chrome
-    opera
     tor-browser
     # Chat
     slack
@@ -119,14 +107,10 @@ cask_apps=(
     1password
     1password-cli
     alfred
-    cakebrew
     dash
-    disk-inventory-x
     geekbench
-    github
     google-backup-and-sync
     google-cloud-sdk
-    google-drive-file-stream
     google-hangouts
     hex-fiend
     little-snitch
@@ -155,7 +139,6 @@ cask_apps=(
     quicklook-json 
     quicklookase
     suspicious-package
-    webpquicklook
 )
 
 for app in "${cask_apps[@]}"; do
@@ -178,14 +161,6 @@ mas_apps=(
 for app in "${mas_apps[@]}"; do
   mas install "$app"
 done
-
-echo "Installing NVM"
-brew install nvm
-export NVM_DIR="$HOME/.nvm"
-mkdir -p "$NVM_DIR"
-. /usr/local/opt/nvm/nvm.sh
-nvm install stable
-nvm alias default stable
 
 echo "Configuring GPG"
 brew install gpg 
