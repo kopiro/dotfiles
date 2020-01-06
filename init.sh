@@ -1,16 +1,9 @@
 #!/bin/bash
-ME="$(whoami)"
-
 # Ask for the administrator password upfront
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 set -x
-
-echo "Configuring base directories..."
-
-# Make my binaries executables
-chmod +x ./bin/*
 
 echo "Installing and upgrading Brew"
 [ -s "/usr/local/bin/brew" ] || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -108,7 +101,6 @@ cask_apps=(
     1password-cli
     alfred
     dash
-    geekbench
     google-backup-and-sync
     google-cloud-sdk
     google-hangouts
@@ -127,6 +119,9 @@ cask_apps=(
     vlc
     vmware-fusion8
     wireshark
+    docker
+    appcleaner
+    colorpicker-skalacolor
     # Finder addons
     provisionql
     qlcolorcode
@@ -168,6 +163,10 @@ brew install pinentry-mac
 mkdir -p ~/.gnupg
 grep "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 grep "no-tty"  ~/.gnupg/gpg.conf || echo "no-tty" >> ~/.gnupg/gpg.conf
+
+echo "Configuring NVM"
+brew install nvm
+mkdir ~/.nvm
 
 echo "Cleaning Brew"
 brew cleanup
