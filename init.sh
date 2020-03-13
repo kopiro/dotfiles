@@ -5,6 +5,10 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 set -x
 
+echo "Configuring structure"
+mkdir ~/Projects
+mkdir ~/Personal
+
 echo "Installing and upgrading Brew"
 [ -s "/usr/local/bin/brew" ] || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew_taps=(
@@ -134,6 +138,7 @@ cask_apps=(
     quicklook-json 
     quicklookase
     suspicious-package
+    antigen
 )
 
 for app in "${cask_apps[@]}"; do
@@ -161,12 +166,15 @@ echo "Configuring GPG"
 brew install gpg 
 brew install pinentry-mac
 mkdir -p ~/.gnupg
-grep "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+grep "pinentry-program" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 grep "no-tty"  ~/.gnupg/gpg.conf || echo "no-tty" >> ~/.gnupg/gpg.conf
 
 echo "Configuring NVM"
 brew install nvm
 mkdir ~/.nvm
+
+echo "Installing iTerm shell integration"
+curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash
 
 echo "Cleaning Brew"
 brew cleanup
