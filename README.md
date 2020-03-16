@@ -4,15 +4,15 @@ This repository reflects my personal macOS setup.
 
 ## Installation
 
-You must clone the repository under `/opt/dotfiles`.
+You must clone the repository under `~/dotfiles`.
 
 ```shell
-cd /opt && git clone git@github.com:kopiro/dotfiles.git --recursive
+cd ~ && git clone git@github.com:kopiro/dotfiles.git
 ```
 
 ## Scripts
 
-#### init.sh
+#### `./init.sh`
 
 This is the main script; it will:
 
@@ -34,15 +34,15 @@ This is the main script; it will:
 - Install and configure Node Version Manager (`nvm`)
 - Install and configure GPG with pinentry
 
-### macos.sh
+### `./macos.sh`
 
 This will set several useful sensible defaults for developers; some opinionated.
 
-### shell.sh
+### `shell.sh`
 
 This will install `zsh` shell and `oh-my-zsh`
 
-### conf-linker.sh
+### `./conf-linker.sh`
 
 This will link several configurations file in the appropriate locations:
 
@@ -50,21 +50,20 @@ This will link several configurations file in the appropriate locations:
 - `~/.eslintrc.json`: Global basic eslint configuration for all projects
 - `~/.editorconfig`: EditorConfig file
 - `~/.gitignore_global`: Global very basic .gitignore for the entire system related to macOS
-- `~/.oh-my-zsh/custom/`: Custom plugins and theme for oh-my-zsh (⚠️ this will delete and override all your custom oh-my-zh directory)
 
 ### Binaries
 
 You can find several binaries in `./bin` - these are already in your `$PATH` if you use my `~/.bash_profile`.
 
-### backup-repos
+### `backup-repos`
 
 To execute in a directory that contains directories of GIT repositories, this will tgz all repos using `%Y%m%d` as a suffix.
 
-### gam
+### `gam`
 
 GIT commit with amend and pre-commit hook disables, then force push (with lease) (⚠️ first add files using `git add`).
 
-### got
+### `got`
 
 ```shell
 got "${message}"
@@ -72,11 +71,11 @@ got "${message}"
 
 GIT commit with your message and push (⚠️ first add files using `git add`).
 
-### gull
+### `gull`
 
 GIT fetch all origins, pull from current branch, update all submodules.
 
-### http-server
+### `http-server`
 
 ```shell
 http-server "${PORT || 8080}"
@@ -84,7 +83,7 @@ http-server "${PORT || 8080}"
 
 Run an HTTP server using `python3` in the current directory.
 
-### https-server
+### `https-server`
 
 ```shell
 https-server "${PORT || 8443}"
@@ -94,11 +93,11 @@ Run an HTTP server using `twistd` in the current directory.
 
 The certificate/key will be generated the first time and saved under `~/.http-server`
 
-### nef2jpg
+### `nef2jpg`
 
 Find all NEF in current directory and convert into JPG using all possibile CPUs in parallel.
 
-### npm-ver
+### `npm-ver`
 
 ```shell
 npm-ver "${VERSION}"
@@ -106,7 +105,7 @@ npm-ver "${VERSION}"
 
 Bump the current NPM module using `patch`, `minor` or `major`, publish it and push all generated GIT tags.
 
-### tor-enable-proxy
+### `tor-enable-proxy`
 
 ```shell
 tor-enable-proxy "${INTERFACE || 'Wi-Fi'}"
@@ -114,15 +113,15 @@ tor-enable-proxy "${INTERFACE || 'Wi-Fi'}"
 
 Start `tor`, and set the SOCKS proxy on the selected interface to use it system-wide.
 
-### upgrade
+### `upgrade`
 
 Upgrade `brew`, `brew cask`, `mas`.
 
-### what-branch
+### `what-branch`
 
 Echo which branch you're in.
 
-### what-ip
+### `what-ip`
 
 Echo your local IP.
 
@@ -206,36 +205,4 @@ showfiles Show hidden files
 hidefiles Hide the hidden files
 itunes Control iTunes. User itunes -h for usage details
 spotify Control Spotify and search by artist, album, track and etc.
-```
-
-### git-extras
-
-```
-git changelog [-l/--list] populate changelog file with commits since the previous tag
-git contrib display author contributions
-git count [--all] count commits
-git delete-branch delete local and remote branch
-git delete-submodule delete submodule
-git delete-tag delete local and remote tag
-git extras [-v/--version] git-extras
-git graft merge commits from source branch to destination branch
-git squash merge commits from source branch into the current one as a single commit
-git feature [finish] create a feature branch
-git refactor [finish] create a refactor branch
-git bug [finish] create a bug branch
-git summary repository summary
-git effort [--above] display effort statistics
-git repl read-eval-print-loop
-git commits-since list commits since a given date
-git release release commit with the given tag
-git alias define, search and show aliases
-git ignore add patterns to .gitignore
-git info show info about the repository
-git create-branch create local and remote branch
-git fresh-branch create empty local branch
-git undo remove the latest commit
-git setup setup a git repository
-git touch one step creation of new files
-git obliterate Completely remove a file from the repository, including past commits and tags
-git local-commits list unpushed commits on the local branch
 ```
