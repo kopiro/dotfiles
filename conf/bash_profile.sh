@@ -58,21 +58,15 @@ antigen use oh-my-zsh
 for plugin in "${zsh_plugins[@]}"; do
   antigen bundle "$plugin"
 done
-antigen theme nanotech
+antigen theme ys
 antigen apply
 
 # Syntactic sugar aliases
 alias please='sudo'
 alias g='git'
-alias sudoedit='sudo nano'
-
-# Docker aliases
+alias dr='docker'
 alias dc='docker-compose'
-alias d-kill='docker rm -f $(docker container ls -aq)' # Kill all containers
-alias d-vol-prune='docker volume rm $(docker volume ls -qf dangling=true)'
-alias d-erase='docker system prune --all --force --volumes' # Erase the docker system
-
-# Other aliases
+alias sudoedit='sudo nano'
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 alias chrome-debug="chrome --remote-debugging-port=9222"
 
