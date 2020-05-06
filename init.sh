@@ -29,6 +29,7 @@ brew_apps=(
     coreutils
     findutils
     git
+    git-lfs
     inetutils
     moreutils
     openssl 
