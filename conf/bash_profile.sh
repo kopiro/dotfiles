@@ -11,31 +11,15 @@ export BREW_PATH=$(brew --prefix)
 export ANDROID_SDK="$HOME/Library/Android/sdk"
 export ANDROID_NDK="/Library/Android/sdk/ndk-bundle"
 export NDK_CCACHE="/usr/local/bin/ccache"
+export HOMEBREW_NO_AUTO_UPDATE=1
 
-# Path definition
-PATH=$PATH:~/.dotfiles/bin
-# Specific bins
-PATH=$PATH:~/.yarn/bin
-PATH=$PATH:~/.composer/vendor/bin
-# Android SDK binaries
-PATH=$PATH:"$ANDROID_SDK/tools"
-PATH=$PATH:"$ANDROID_SDK/build-tools"
-PATH=$PATH:"$ANDROID_SDK/platform-tools"
-PATH=$PATH:"$ANDROID_SDK/tools/bin"
-# Default bin/sbin
-PATH=$PATH:/usr/local/bin
-PATH=$PATH:/usr/local/sbin
-PATH=$PATH:/usr/bin
-PATH=$PATH:/usr/sbin
-PATH=$PATH:/bin
-PATH=$PATH:/sbin
-export PATH
 
 # ZSH things
 zsh_plugins=(
   paulirish/git-open
   zsh-users/zsh-completions
   zsh-users/zsh-autosuggestions
+  zsh-users/zsh-syntax-highlighting
   autojump
   common-aliases
   git-extras
@@ -51,6 +35,8 @@ zsh_plugins=(
   bgnotify
   alias-tips
   vscode
+  command-not-found
+  alexrochas/zsh-extract
 )
 
 source /usr/local/share/antigen/antigen.zsh
@@ -58,7 +44,7 @@ antigen use oh-my-zsh
 for plugin in "${zsh_plugins[@]}"; do
   antigen bundle "$plugin"
 done
-antigen theme ys
+antigen theme robbyrussell
 antigen apply
 
 # Syntactic sugar aliases
@@ -98,3 +84,16 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# Path definition
+EXTRAPATH=~/.dotfiles/bin
+EXTRAPATH=$EXTRAPATH:/usr/local/opt/curl/bin
+EXTRAPATH=$EXTRAPATH:~/.composer/vendor/bin
+# Android SDK binaries
+EXTRAPATH=$EXTRAPATH:"$ANDROID_SDK/tools"
+EXTRAPATH=$EXTRAPATH:"$ANDROID_SDK/build-tools"
+EXTRAPATH=$EXTRAPATH:"$ANDROID_SDK/platform-tools"
+EXTRAPATH=$EXTRAPATH:"$ANDROID_SDK/tools/bin"
+
+PATH=$EXTRAPATH:$PATH
+export PATH
