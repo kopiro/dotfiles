@@ -11,8 +11,9 @@ export BREW_PATH=$(brew --prefix)
 export ANDROID_SDK="$HOME/Library/Android/sdk"
 export ANDROID_NDK="/Library/Android/sdk/ndk-bundle"
 export NDK_CCACHE="/usr/local/bin/ccache"
-export HOMEBREW_NO_AUTO_UPDATE=1
-
+export HOMEBREW_NO_ANALYTICS=true
+export HOMEBREW_NO_AUTO_UPDATE=true
+export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # ZSH things
 zsh_plugins=(

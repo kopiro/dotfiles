@@ -4,15 +4,15 @@ This repository reflects my personal macOS setup.
 
 ## Installation
 
-You must clone the repository under `~/dotfiles`.
+You must clone the repository under `~/.dotfiles`.
 
 ```shell
-cd ~ && git clone git@github.com:kopiro/dotfiles.git
+cd ~ && git clone git@github.com:kopiro/dotfiles.git .dotfiles
 ```
 
 ## Scripts
 
-#### `./init.sh`
+#### `./brew.sh`
 
 This is the main script; it will:
 
