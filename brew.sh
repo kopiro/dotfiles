@@ -26,6 +26,7 @@ openssl
 socat
 wget
 gpg
+fzf
 # Compilation
 autoconf
 freetype  
