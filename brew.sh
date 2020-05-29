@@ -72,6 +72,7 @@ sqlite
 tldr
 wifi-password
 youtube-dl
+iperf3
 )
 
 for app in "${brew_apps[@]}"; do brew install "$app"; done
@@ -101,7 +102,6 @@ alfred
 dash
 google-backup-and-sync
 google-cloud-sdk
-google-hangouts
 hex-fiend
 little-snitch
 notion
@@ -132,7 +132,6 @@ quicklook-csv
 quicklook-json 
 quicklookase
 suspicious-package
-antigen
 )
 
 for app in "${cask_apps[@]}"; do brew cask install "$app"; done

@@ -64,6 +64,14 @@ alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
 alias md5sum="md5"
 alias sha1sum="shasum"
+alias gc="git checkout"
+alias push="git push"
+alias pull="git pull"
+alias fetch="git fetch"
+alias cmt="git commit"
+alias stash="git stash"
+alias gcm="git checkout master"
+alias grhm="git reset --hard origin/master"
 
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
@@ -222,48 +230,12 @@ got() {
   git push
 }
 
-gb() {
-  git rev-parse --abbrev-ref HEAD 2>/dev/null
+grom() {
+  git fetch origin && git rebase origin/master
 }
 
 git-branch-purge() {
   git branch --merged | grep -E -v "(^\*|master|beta)" | xargs git branch -d
-}
-
-git-get-repo() {
-  echo "$1" | sed -e "s/.git$//" -e "s/.*github.com[:/]\(.*\)/\1/"
-}
-
-git-build-url() {
-  # shellcheck disable=SC2039
-  local upstream origin branch repo pr_url target
-  upstream="$(git config --get remote.upstream.url)"
-  origin="$(git config --get remote.origin.url)"
-  branch="$(git symbolic-ref --short HEAD)"
-  repo="$(git-get-repo "$origin")"
-  pr_url="https://github.com/$repo/pull/new"
-  target="$1"
-  test -z "$target" && target=$(git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)" | cut -d '/' -f 2)
-  test -z "$target" && target="master"
-  if [ -z "$upstream" ]; then
-    echo "$pr_url/$target...$branch"
-  else
-    # shellcheck disable=SC2039
-    local origin_name upstream_name
-    origin_name="$(echo "$repo" | cut -f1 -d'/')"
-    upstream_name="$(git-get-repo "$upstream" | cut -f1 -d'/')"
-    echo "$pr_url/$upstream_name:$target...$origin_name:$branch"
-  fi
-}
-
-open-pr() {
-  local url
-  url="$(git-build-url "$*")"
-  if [ "$(uname -s)" = "Darwin" ]; then
-    open "$url" 2> /dev/null
-  else
-    xdg-open "$url" > /dev/null 2> /dev/null
-  fi
 }
 
 http-server() {
