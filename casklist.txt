@@ -46,3 +46,4 @@ quicklook-csv
 quicklook-json 
 quicklookase
 suspicious-package
+grammarly
