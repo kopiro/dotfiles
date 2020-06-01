@@ -73,6 +73,7 @@ tldr
 wifi-password
 youtube-dl
 iperf3
+kubectx
 )
 
 for app in "${brew_apps[@]}"; do brew install "$app"; done
@@ -120,6 +121,7 @@ wireshark
 docker
 appcleaner
 colorpicker-skalacolor
+lepton
 # Finder addons
 provisionql
 qlcolorcode
