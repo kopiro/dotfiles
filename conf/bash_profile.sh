@@ -176,11 +176,6 @@ ql() {
   (( $# > 0 )) && qlmanage -p "$*" &>/dev/null &
 }
 
-manp() {
-  man -t "$@" | open -f -a Preview
-}
-compdef _man manp
-
 vnc() {
   open "vnc://$1"
 }
@@ -230,7 +225,7 @@ got() {
   git push
 }
 
-grom() {
+greb() {
   git fetch origin && git rebase origin/master
 }
 
