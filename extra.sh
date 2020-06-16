@@ -6,12 +6,11 @@ mkdir -p ~/Personal
 mkdir -p ~/.nvm
 mkdir -p ~/.gnupg
 
-ln -sf "$(pwd)/conf/bash_profile.sh" ~/.bash_profile
-ln -sf "$(pwd)/conf/gitignore_global.txt" ~/.gitignore_global
+ln -sf ~/.dotfiles/conf/bash_profile.sh ~/.bash_profile
+ln -sf ~/.dotfiles/conf/gitignore_global.txt ~/.gitignore_global
 
 echo "Configuring GPG"
-brew install pinentry-mac
-grep "pinentry-program" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+grep "pinentry-program" ~/.gnupg/gpg-agent.conf || echo "pinentry-program /usr/local/MacGPG2/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 grep "no-tty"  ~/.gnupg/gpg.conf || echo "no-tty" >> ~/.gnupg/gpg.conf
 
 echo "Installing iTerm shell integration"
