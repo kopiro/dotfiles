@@ -16,12 +16,14 @@ export LC_CTYPE=UTF-8 # The character set used to display and input text
 export HOMEBREW_NO_ANALYTICS=1 # Tell to brew to not collect analytics data
 export HOMEBREW_NO_AUTO_UPDATE=true # Tell to brew to not auto-update before brew intsall
 export NVM_DIR=~/.nvm
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # Change this accordingly to your system
 export NDK_CCACHE=/usr/local/bin/ccache
 export ANDROID_SDK=~/Library/Android/sdk
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.1.jdk/Contents/Home # $(/usr/libexec/java_home)
 export BREW_PATH=/usr/local # $(brew --prefix)
+
 
 # ZSH things
 OHMYZSH_PLUGINS=(
@@ -50,6 +52,8 @@ antigen apply
 alias y='yarn'
 alias g='git'
 alias d='docker'
+alias k='kubectl'
+alias yw='yarn workspace'
 
 # Syntactic sugar aliases
 alias please='sudo'
@@ -70,12 +74,6 @@ alias pull="git pull"
 alias fetch="git fetch"
 alias cmt="git commit"
 alias stash="git stash"
-alias gcm="git checkout master"
-alias grhm="git reset --hard origin/master"
-
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-  alias "$method"="lwp-request -m '$method'"
-done
 
 # Common alias
 alias l='ls -lFh'     #size,show type,human readable
@@ -212,21 +210,22 @@ gam() {
   git push --force-with-lease
 }
 
-gull() {
-  git fetch --all &&
-  git pull &&
-  git submodule sync --recursive &&
-  git submodule update --init --recursive
-}
-
 got() {
   git add . && 
   git commit -m "$1" &&
   git push
 }
 
-greb() {
-  git fetch origin && git rebase origin/master
+gcm() {
+  git checkout master
+}
+
+gcmp() {
+  git checkout master && git pull --rebase
+}
+
+grom() {
+  git fetch origin && git rebase --hard origin/master
 }
 
 git-branch-purge() {

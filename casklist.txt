@@ -47,3 +47,4 @@ quicklook-json
 quicklookase
 suspicious-package
 grammarly
+lunar
