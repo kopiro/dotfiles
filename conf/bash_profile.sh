@@ -5,7 +5,6 @@ export CXX=g++ # The name of the C++ compiler to use
 
 export PAGER=less
 export EDITOR=nano
-export VISUAL=nano
 export BROWSER=chrome 
 export MPLAYER=vlc 
 export XIVIEWER=ql
