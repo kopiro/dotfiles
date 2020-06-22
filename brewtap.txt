@@ -1,3 +1,4 @@
-buo/cask-upgrade
 homebrew/bundle
-homebrew/core'
+homebrew/core
+buo/cask-upgrade
+homebrew/cask-fonts
