@@ -4,18 +4,18 @@ echo "Installing and upgrading Brew"
 [ -s "/usr/local/bin/brew" ] || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 echo "Tapping Brew's"
-cat brewtap.txt | xargs brew tap
+for e in $(cat brewtap.txt); do brew tap $e; done
 brew update
 
 echo "Install Brew's software base"
-cat brewlist.txt | xargs brew install
+for e in $(cat brewlist.txt); do brew install $e; done
 
 echo "Install Cask's base"
-cat casklist.txt | xargs brew cask install
+for e in $(cat casklist.txt); do brew cask install $e; done
 
 echo "Install MAS's apps"
 brew install mas
-cat mas.txt | xargs mac install
+for e in $(cat mas.txt); do mas install $e; done
 
 echo "Cleaning Brew"
 brew cleanup
