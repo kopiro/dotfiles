@@ -44,3 +44,5 @@ wifi-password
 youtube-dl
 iperf3
 kubectx
+sox
+ffmpeg
