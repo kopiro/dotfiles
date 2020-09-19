@@ -23,6 +23,8 @@ export ANDROID_SDK=~/Library/Android/sdk
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.1.jdk/Contents/Home # $(/usr/libexec/java_home)
 export BREW_PATH=/usr/local # $(brew --prefix)
 
+PATH="$PATH:/opt/webOS_TV_SDK/CLI/bin"
+export PATH
 
 # ZSH things
 OHMYZSH_PLUGINS=(
@@ -67,12 +69,21 @@ alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
 alias md5sum="md5"
 alias sha1sum="shasum"
-alias gc="git checkout"
+
+# Git Aliases
 alias push="git push"
 alias pull="git pull"
 alias fetch="git fetch"
-alias cmt="git commit"
+alias commit="git commit"
+alias rebase="git rebase"
+alias gr="git rebase"
 alias stash="git stash"
+alias gs="git stash"
+alias checkout="git checkout"
+alias gc="git checkout"
+alias gra="git rebase --abort"
+alias grc="git rebase --continue"
+alias gcm="git checkout master"
 
 # Common alias
 alias l='ls -lFh'     #size,show type,human readable
@@ -86,7 +97,7 @@ alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
 
 alias zshrc='${=EDITOR} ~/.zshrc'
-alias bashprofile='${=EDITOR} ~/.bash_profile'
+alias bashprof='${=EDITOR} ~/.bash_profile'
 
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
@@ -140,6 +151,10 @@ ofd() {
   open_command "$PWD"
 }
 
+npm-ver() {
+  npm version "$1" && git push && git push --tags
+}
+
 pfd() {
   osascript 2>/dev/null <<EOF
     tell application "Finder"
@@ -187,8 +202,12 @@ flush() {
   killall -HUP mDNSResponder
 }
 
-dkill() {
-  docker kill "$(docker ps -q)"
+docker-stop() {
+  docker stop $(docker ps -aq)
+}
+
+docker-remove() {
+  docker rm $(docker ps -aq)
 }
 
 http-sniff() {
@@ -199,34 +218,36 @@ http-dump() {
   sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
 }
 
+# Git amend and push (forced)
 gam() {
   branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   if [ "$branch" = "master" ]; then
     echo "Sorry, I can't do this when you're on master"
     return
   fi
-  git commit -n --amend &&
+  git commit -n --amend --no-edit &&
   git push --force-with-lease
 }
 
+# Simple commit and push
 got() {
   git commit -m "$1" &&
   git push
 }
 
-gcm() {
-  git checkout master
+# Simple commit and push (skip pre-commits)
+gotn() {
+  git commit -n -m "$1" &&
+  git push
 }
 
-gcmp() {
-  git checkout master && git pull --rebase
+# Sync this branch with origin/master
+g-sync() {
+  git fetch origin && git rebase origin/master
 }
 
-grom() {
-  git fetch origin && git rebase --hard origin/master
-}
-
-git-branch-purge() {
+g-prune() {
+  git gc --aggressive --prune
   git branch --merged | grep -E -v "(^\*|master|beta)" | xargs git branch -d
 }
 
@@ -302,6 +323,20 @@ ip() {
   ifconfig en0 | grep "inet " | cut -d " " -f 2
 }
 
+pkgj-run-list() {
+  jq .scripts package.json | grep -o '.*\":' | sed -nE 's/\"(.*)\":/\1/p' | awk '{$1=$1};1' | fzf | tr -d '\r' | tr -d '\n'
+}
+
+yarn-x() {
+  PKG_CMD=$(pkgj-run-list)
+  [ -n "$PKG_CMD" ] && print -s "yarn $PKG_CMD" && yarn "$PKG_CMD"
+}
+alias yx="yarn-x"
+
+npm-x() {
+  PKG_CMD=$(pkgj-run-list)
+  [ -n "$PKG_CMD" ] && print -s "npm run $PKG_CMD" && npm run "$PKG_CMD"
+}
 
 # NVM hook
 autoload -U add-zsh-hook

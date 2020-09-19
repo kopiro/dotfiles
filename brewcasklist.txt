@@ -46,3 +46,4 @@ gpg-suite-no-mail
 font-jetbrains-mono
 font-inconsolata
 sony-ps4-remote-play
+hopper-disassembler
