@@ -51,6 +51,7 @@ antigen apply
 
 # One letter alias
 alias y='yarn'
+alias n='npm'
 alias g='git'
 alias d='docker'
 alias k='kubectl'
@@ -76,14 +77,9 @@ alias pull="git pull"
 alias fetch="git fetch"
 alias commit="git commit"
 alias rebase="git rebase"
-alias gr="git rebase"
+alias master="git checkout master && git pull origin master"
 alias stash="git stash"
-alias gs="git stash"
 alias checkout="git checkout"
-alias gc="git checkout"
-alias gra="git rebase --abort"
-alias grc="git rebase --continue"
-alias gcm="git checkout master"
 
 # Common alias
 alias l='ls -lFh'     #size,show type,human readable
@@ -323,6 +319,16 @@ ip() {
   ifconfig en0 | grep "inet " | cut -d " " -f 2
 }
 
+kill-port() {
+  pid=$(lsof -n -i4TCP:$1 | awk '{print $2}' | tail -n 1)
+  if [ -n "$pid" ]; then 
+    echo "Killing PID: $pid"
+    kill -9 "$pid"
+  else 
+    echo "No app running on port $1"
+  fi
+}
+
 pkgj-run-list() {
   jq .scripts package.json | grep -o '.*\":' | sed -nE 's/\"(.*)\":/\1/p' | awk '{$1=$1};1' | fzf | tr -d '\r' | tr -d '\n'
 }
@@ -336,6 +342,20 @@ alias yx="yarn-x"
 npm-x() {
   PKG_CMD=$(pkgj-run-list)
   [ -n "$PKG_CMD" ] && print -s "npm run $PKG_CMD" && npm run "$PKG_CMD"
+}
+
+sync-code-projects() {
+  CODE_PROJECTS_FILE="$HOME/Library/Application Support/Code/User/projects.json" && \
+  echo "[" > "$CODE_PROJECTS_FILE" && \
+  find ~/Projects \
+    -maxdepth 1 \
+    -type d \
+    -execdir echo "{ \"name\": \"{}\", \"rootPath\": \"$HOME/Projects/{}\", \"enabled\": true }," >> "$CODE_PROJECTS_FILE" \; &&
+  echo "{}]" >> "$CODE_PROJECTS_FILE"
+}
+
+hear-myself() {
+   sox --buffer 128 -d -d
 }
 
 # NVM hook
