@@ -96,3 +96,5 @@ sox
 ffmpeg
 jq
 asciinema
+fswatch
+cmake
