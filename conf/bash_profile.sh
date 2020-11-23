@@ -23,9 +23,6 @@ export ANDROID_SDK=~/Library/Android/sdk
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.1.jdk/Contents/Home # $(/usr/libexec/java_home)
 export BREW_PATH=/usr/local # $(brew --prefix)
 
-PATH="$PATH:/opt/webOS_TV_SDK/CLI/bin"
-export PATH
-
 # ZSH things
 OHMYZSH_PLUGINS=(
 autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
@@ -110,7 +107,6 @@ alias -g LL="2>&1 | less"
 alias -g CA="2>&1 | cat -A"
 alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
-alias -g P="2>&1| pygmentize -l pytb"
 
 alias dud='du -d 1 -h'
 alias duf='du -sh *'

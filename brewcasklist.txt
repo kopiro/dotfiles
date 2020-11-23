@@ -3,11 +3,9 @@ java
 xquartz
 charles
 iterm2
-sequel-pro
 sublime-text
 visual-studio-code
 firefox
-tor-browser
 slack
 telegram
 1password
@@ -39,11 +37,5 @@ qlvideo
 quicklook-csv
 quicklook-json 
 quicklookase
-suspicious-package
-grammarly
 lunar
 gpg-suite-no-mail
-font-jetbrains-mono
-font-inconsolata
-sony-ps4-remote-play
-hopper-disassembler
