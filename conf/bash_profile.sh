@@ -23,6 +23,11 @@ export ANDROID_SDK=~/Library/Android/sdk
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.1.jdk/Contents/Home # $(/usr/libexec/java_home)
 export BREW_PATH=/usr/local # $(brew --prefix)
 
+# Google Cloud SDK
+export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
 # ZSH things
 OHMYZSH_PLUGINS=(
 autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
@@ -375,9 +380,13 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 
+# Autoload completion
+autoload -Uz compinit && compinit
+
 # Setup external integrations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -e ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -s /usr/local/opt/nvm/nvm.sh ] && source /usr/local/opt/nvm/nvm.sh  # This loads nvm
 [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
 [ -f /usr/local/bin/kubectl ] && source <(kubectl completion zsh)
+[ -f /usr/local/opt/zsh-git-prompt/zshrc.sh ] && source /usr/local/opt/zsh-git-prompt/zshrc.sh
