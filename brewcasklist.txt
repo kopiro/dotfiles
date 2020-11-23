@@ -39,3 +39,4 @@ quicklook-json
 quicklookase
 lunar
 gpg-suite-no-mail
+font-sf-mono-nerd-font
