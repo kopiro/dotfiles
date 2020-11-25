@@ -218,7 +218,7 @@ http-dump() {
 # Git amend and push (forced)
 gam() {
   branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  if [ "$branch" = "master" ]; then
+  if [ "$branch" = "master" ] && [ "$1" != "-f" ]; then
     echo "Sorry, I can't do this when you're on master"
     return
   fi
@@ -390,3 +390,4 @@ autoload -Uz compinit && compinit
 [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
 [ -f /usr/local/bin/kubectl ] && source <(kubectl completion zsh)
 [ -f /usr/local/opt/zsh-git-prompt/zshrc.sh ] && source /usr/local/opt/zsh-git-prompt/zshrc.sh
+[ -f ~/.config/broot/launcher/bash/br ] && source ~/.config/broot/launcher/bash/br

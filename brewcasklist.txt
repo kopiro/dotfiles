@@ -40,3 +40,5 @@ quicklookase
 lunar
 gpg-suite-no-mail
 font-sf-mono-nerd-font
+suspicious-package
+aerial

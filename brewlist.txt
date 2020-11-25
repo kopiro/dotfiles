@@ -98,3 +98,6 @@ jq
 asciinema
 fswatch
 cmake
+broot
+colordiff
+colortail
