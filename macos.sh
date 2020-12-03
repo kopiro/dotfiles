@@ -294,9 +294,8 @@ defaults write com.apple.screencapture type -string "png"
 defaults write com.apple.screencapture disable-shadow -bool true
 
 # Enable subpixel font rendering on non-Apple LCDs
-# Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
-defaults write NSGlobalDomain AppleFontSmoothing -int 1
-defaults write NSGlobalDomain CGFontRenderingFontSmoothingDisabled -bool false
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
+defaults write NSGlobalDomain CGFontRenderingFontSmoothingDisabled -bool true
 
 # Enable HiDPI display modes (requires restart)
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
@@ -972,18 +971,6 @@ launchctl load /System/Library/LaunchAgents/com.apple.alf.useragent.plist
 
 # Disable IR remote control
 sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool false
-
-# Disable remote apple events
-# sudo systemsetup -setremoteappleevents off
-# TODO: requires full disk access
-
-# Disable wake-on modem
-# sudo systemsetup -setwakeonmodem off
-sudo pmset -a ring 0
-
-# Disable wake-on LAN
-sudo systemsetup -setwakeonnetworkaccess off
-sudo pmset -a womp 0
 
 # Display login window as name and password
 sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
