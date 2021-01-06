@@ -13,7 +13,6 @@ export LC_CTYPE=UTF-8 # The character set used to display and input text
 export HOMEBREW_NO_ANALYTICS=1 # Tell to brew to not collect analytics data
 export HOMEBREW_NO_AUTO_UPDATE=true # Tell to brew to not auto-update before brew intsall
 export NVM_DIR=~/.nvm
-export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # Change this accordingly to your system
 export NDK_CCACHE=/usr/local/bin/ccache
@@ -25,7 +24,9 @@ export BREW_PATH=/usr/local # $(brew --prefix)
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 
 # ZSH things
-OHMYZSH_PLUGINS=(
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSH_THEME=robbyrussell
+export OHMYZSH_PLUGINS=(
 autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
 last-working-dir # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
 docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
@@ -45,7 +46,6 @@ if [ -f /usr/local/share/antigen/antigen.zsh ]; then
   for plugin in "${OHMYZSH_PLUGINS[@]}"; do
     antigen bundle "$plugin"
   done
-  antigen theme robbyrussell
   antigen apply
 fi
 
