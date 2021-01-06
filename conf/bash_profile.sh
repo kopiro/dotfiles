@@ -39,13 +39,15 @@ zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-high
 )
 
 # Setup antigen
-[ -f /usr/local/share/antigen/antigen.zsh ] && source /usr/local/share/antigen/antigen.zsh
-antigen use oh-my-zsh
-for plugin in "${OHMYZSH_PLUGINS[@]}"; do
-  antigen bundle "$plugin"
-done
-antigen theme robbyrussell
-antigen apply
+if [ -f /usr/local/share/antigen/antigen.zsh ]; then
+  source /usr/local/share/antigen/antigen.zsh
+  antigen use oh-my-zsh
+  for plugin in "${OHMYZSH_PLUGINS[@]}"; do
+    antigen bundle "$plugin"
+  done
+  antigen theme robbyrussell
+  antigen apply
+fi
 
 # One letter alias
 alias y='yarn'
@@ -357,6 +359,9 @@ hear-myself() {
 
 # NVM hook
 if [ -s /usr/local/opt/nvm/nvm.sh ]; then
+  source /usr/local/opt/nvm/nvm.sh
+  source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
+
   autoload -U add-zsh-hook
   load-nvmrc() {
     local node_version="$(nvm version)"
@@ -384,8 +389,6 @@ autoload -Uz compinit && compinit
 # Setup external integrations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -e ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-[ -s /usr/local/opt/nvm/nvm.sh ] && source /usr/local/opt/nvm/nvm.sh  # This loads nvm
-[ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
 [ -f /usr/local/bin/kubectl ] && source <(kubectl completion zsh)
 [ -f /usr/local/opt/zsh-git-prompt/zshrc.sh ] && source /usr/local/opt/zsh-git-prompt/zshrc.sh
 [ -f ~/.config/broot/launcher/bash/br ] && source ~/.config/broot/launcher/bash/br
