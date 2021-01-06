@@ -8,7 +8,7 @@ export MPLAYER=vlc
 export XIVIEWER=ql
 
 export LANG=en # The basic language setting used by applications on the system
-export LC_ALL=en_SE.UTF-8 # This variable serves as a powerful override over all the other locale environment variables.
+export LC_ALL=en_US.UTF-8 # This variable serves as a powerful override over all the other locale environment variables.
 export LC_CTYPE=UTF-8 # The character set used to display and input text
 export HOMEBREW_NO_ANALYTICS=1 # Tell to brew to not collect analytics data
 export HOMEBREW_NO_AUTO_UPDATE=true # Tell to brew to not auto-update before brew intsall
@@ -378,7 +378,7 @@ autoload -Uz compinit && compinit
 
 # Setup external integrations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -e ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f /usr/local/bin/kubectl ] && source <(kubectl completion zsh)
 [ -f /usr/local/opt/zsh-git-prompt/zshrc.sh ] && source /usr/local/opt/zsh-git-prompt/zshrc.sh
 [ -f ~/.config/broot/launcher/bash/br ] && source ~/.config/broot/launcher/bash/br
