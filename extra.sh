@@ -17,7 +17,7 @@ echo "Installing Antigen"
 if [[ "$OSTYPE" == "darwin"* ]]; then
 brew install antigen
 elif [[ "$OSTYPE" == "linux"* ]]; then
-apt-get install zsh-antigen
+sudo apt-get install zsh-antigen
 fi
 
 
