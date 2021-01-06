@@ -1,5 +1,3 @@
-#!/bin/bash
-
 export CC=gcc # The name of the C compiler to use
 export CXX=g++ # The name of the C++ compiler to use
 
@@ -25,8 +23,6 @@ export BREW_PATH=/usr/local # $(brew --prefix)
 
 # Google Cloud SDK
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # ZSH things
 OHMYZSH_PLUGINS=(
@@ -391,3 +387,5 @@ autoload -Uz compinit && compinit
 [ -f /usr/local/bin/kubectl ] && source <(kubectl completion zsh)
 [ -f /usr/local/opt/zsh-git-prompt/zshrc.sh ] && source /usr/local/opt/zsh-git-prompt/zshrc.sh
 [ -f ~/.config/broot/launcher/bash/br ] && source ~/.config/broot/launcher/bash/br
+[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc ] && source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc ] && source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
