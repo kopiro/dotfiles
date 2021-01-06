@@ -343,16 +343,6 @@ npm-x() {
   [ -n "$PKG_CMD" ] && print -s "npm run $PKG_CMD" && npm run "$PKG_CMD"
 }
 
-sync-code-projects() {
-  CODE_PROJECTS_FILE="$HOME/Library/Application Support/Code/User/projects.json" && \
-  echo "[" > "$CODE_PROJECTS_FILE" && \
-  find ~/Projects \
-    -maxdepth 1 \
-    -type d \
-    -execdir echo "{ \"name\": \"{}\", \"rootPath\": \"$HOME/Projects/{}\", \"enabled\": true }," >> "$CODE_PROJECTS_FILE" \; &&
-  echo "{}]" >> "$CODE_PROJECTS_FILE"
-}
-
 hear-myself() {
    sox --buffer 128 -d -d
 }
