@@ -14,38 +14,38 @@ export HOMEBREW_NO_ANALYTICS=1 # Tell to brew to not collect analytics data
 export HOMEBREW_NO_AUTO_UPDATE=true # Tell to brew to not auto-update before brew intsall
 export NVM_DIR=~/.nvm
 
-# Change this accordingly to your system
+# System paths
 export NDK_CCACHE=/usr/local/bin/ccache
 export ANDROID_SDK=~/Library/Android/sdk
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.1.jdk/Contents/Home # $(/usr/libexec/java_home)
 export BREW_PATH=/usr/local # $(brew --prefix)
-
-# Google Cloud SDK
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 
 # ZSH things
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-export ZSH_THEME=robbyrussell
-export OHMYZSH_PLUGINS=(
-autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
-last-working-dir # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
-docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
-sudo # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
-bgnotify # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
-djui/alias-tips # https://github.com/djui/alias-tips
-command-not-found # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found
-zsh-users/zsh-completions # https://github.com/zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions
-zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
-)
+export ZSH_THEME=xiong-chiamiov-plus
+export DISABLE_AUTO_UPDATE=true
 
 # Setup antigen
 if [ -f /usr/local/share/antigen/antigen.zsh ]; then
   source /usr/local/share/antigen/antigen.zsh
   antigen use oh-my-zsh
-  for plugin in "${OHMYZSH_PLUGINS[@]}"; do
-    antigen bundle "$plugin"
-  done
+
+  OHMYZSH_PLUGINS=(
+  git # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
+  autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
+  last-working-dir # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
+  docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
+  sudo # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
+  bgnotify # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
+  djui/alias-tips # https://github.com/djui/alias-tips
+  command-not-found # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found
+  zsh-users/zsh-completions # https://github.com/zsh-users/zsh-completions
+  zsh-users/zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions
+  zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
+  )
+
+  for plugin in "${OHMYZSH_PLUGINS[@]}"; do antigen bundle "$plugin"; done
   antigen apply
 fi
 
@@ -55,7 +55,10 @@ alias n='npm'
 alias g='git'
 alias d='docker'
 alias k='kubectl'
+
+# Two letter alias
 alias yw='yarn workspace'
+alias dc='docker-compose'
 
 # Syntactic sugar aliases
 alias please='sudo'
@@ -64,22 +67,14 @@ alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 alias chrome-debug="chrome --remote-debugging-port=9222"
 alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias plistbuddy="/usr/libexec/PlistBuddy"
-alias dc='docker-compose'
 alias badge="tput bel"
-alias stfu="osascript -e 'set volume output muted true'"
+alias mute="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
 alias md5sum="md5"
 alias sha1sum="shasum"
 
 # Git Aliases
-alias push="git push"
-alias pull="git pull"
-alias fetch="git fetch"
-alias commit="git commit"
-alias rebase="git rebase"
 alias master="git checkout master && git pull origin master"
-alias stash="git stash"
-alias checkout="git checkout"
 
 # Common alias
 alias l='ls -lFh'     #size,show type,human readable
@@ -93,7 +88,7 @@ alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
 
 alias zshrc='${=EDITOR} ~/.zshrc'
-alias bashprof='${=EDITOR} ~/.bash_profile'
+alias bashrc='${=EDITOR} ~/.bash_profile'
 
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
@@ -123,18 +118,14 @@ alias p='ps -f'
 alias sortnr='sort -n -r'
 alias unexport='unset'
 
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
-#read documents
+# Read documents
 alias -s pdf=acroread
 alias -s ps=gv
 alias -s dvi=xdvi
 alias -s chm=xchm
 alias -s djvu=djview
 
-#list whats inside packed file
+# List whats inside packed file
 alias -s zip="unzip -l"
 alias -s rar="unrar l"
 alias -s tar="tar tf"
@@ -144,39 +135,6 @@ alias -s ace="unace l"
 # Open the current directory in a Finder window
 ofd() {
   open_command "$PWD"
-}
-
-npm-ver() {
-  npm version "$1" && git push && git push --tags
-}
-
-pfd() {
-  osascript 2>/dev/null <<EOF
-    tell application "Finder"
-      return POSIX path of (target of window 1 as alias)
-    end tell
-EOF
-}
-
-pfs() {
-  osascript 2>/dev/null <<EOF
-    set output to ""
-    tell application "Finder" to set the_selection to selection
-    set item_count to count the_selection
-    repeat with item_index from 1 to count the_selection
-      if item_index is less than item_count then set the_delimiter to "\n"
-      if item_index is item_count then set the_delimiter to ""
-      set output to output & ((item item_index of the_selection as alias)'s POSIX path) & the_delimiter
-    end repeat
-EOF
-}
-
-cdf() {
-  cd "$(pfd)" || return
-}
-
-pushdf() {
-  pushd "$(pfd)" || return
 }
 
 ql() {
@@ -192,17 +150,17 @@ rmdsstore() {
 	find "${@:-.}" -type f -name .DS_Store -delete
 }
   
-flush() {
+dns-flush() {
   dscacheutil -flushcache && 
   killall -HUP mDNSResponder
 }
 
 docker-stop() {
-  docker stop $(docker ps -aq)
+  docker stop "$(docker ps -aq)"
 }
 
 docker-remove() {
-  docker rm $(docker ps -aq)
+  docker rm "$(docker ps -aq)"
 }
 
 http-sniff() {
@@ -211,17 +169,6 @@ http-sniff() {
 
 http-dump() {
   sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
-}
-
-# Git amend and push (forced)
-gam() {
-  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  if [ "$branch" = "master" ] && [ "$1" != "-f" ]; then
-    echo "Sorry, I can't do this when you're on master"
-    return
-  fi
-  git commit -n --amend --no-edit &&
-  git push --force-with-lease
 }
 
 # Simple commit and push
@@ -236,12 +183,23 @@ gotn() {
   git push
 }
 
+# Git amend and push (forced)
+gotf() {
+  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ "$branch" = "master" ] && [ "$1" != "-f" ]; then
+    echo "Sorry, I can't do this when you're on master"
+    return
+  fi
+  git commit -n --amend --no-edit &&
+  git push --force-with-lease
+}
+
 # Sync this branch with origin/master
-g-sync() {
+gsync() {
   git fetch origin && git rebase origin/master
 }
 
-g-prune() {
+gprune() {
   git gc --aggressive --prune
   git branch --merged | grep -E -v "(^\*|master|beta)" | xargs git branch -d
 }
@@ -312,20 +270,11 @@ upgrade() {
   brew upgrade
   brew cask upgrade
   mas upgrade
+  omz update
 }
 
 ip() {
-  ifconfig en0 | grep "inet " | cut -d " " -f 2
-}
-
-kill-port() {
-  pid=$(lsof -n -i4TCP:$1 | awk '{print $2}' | tail -n 1)
-  if [ -n "$pid" ]; then 
-    echo "Killing PID: $pid"
-    kill -9 "$pid"
-  else 
-    echo "No app running on port $1"
-  fi
+  /sbin/ifconfig | grep "inet " | cut -d " " -f 2
 }
 
 pkgj-run-list() {
@@ -342,6 +291,7 @@ npm-x() {
   PKG_CMD=$(pkgj-run-list)
   [ -n "$PKG_CMD" ] && print -s "npm run $PKG_CMD" && npm run "$PKG_CMD"
 }
+alias nx="npm-x"
 
 hear-myself() {
    sox --buffer 128 -d -d
