@@ -1,10 +1,5 @@
 #!/bin/bash
 
-echo "Linking configurations"
-ln -svf ~/.dotfiles/conf/zshrc.sh ~/.zshrc
-ln -svf ~/.dotfiles/conf/bash_profile.sh ~/.bash_profile
-touch ~/.bash_profile_custom
-
 if [ ! -d ~/.oh-my-zsh ]; then
 echo "Installing OH-MY-ZSH"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -24,3 +19,8 @@ echo "Installing iTerm shell integration"
 curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash
 fi
 fi
+
+echo "Linking configurations"
+ln -svf ~/.dotfiles/conf/zshrc.sh ~/.zshrc
+ln -svf ~/.dotfiles/conf/bash_profile.sh ~/.bash_profile
+touch ~/.bash_profile_custom
