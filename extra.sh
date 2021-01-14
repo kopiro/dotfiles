@@ -23,4 +23,6 @@ fi
 echo "Linking configurations"
 ln -svf ~/.dotfiles/conf/zshrc.sh ~/.zshrc
 ln -svf ~/.dotfiles/conf/bash_profile.sh ~/.bash_profile
+ln -svf ~/.dotfiles/conf/gitconfig.txt ~/.gitconfig
+ln -svf ~/.dotfiles/conf/gitignore.txt ~/.gitignore_global
 touch ~/.bash_profile_custom

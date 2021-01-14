@@ -13,7 +13,7 @@ echo "Install Brew's software base"
 for e in $(cat ./_apps/brewlist.txt); do brew install $e; done
 
 echo "Install Cask's base"
-for e in $(cat ./_apps/brewcasklist.txt); do brew cask install $e; done
+for e in $(cat ./_apps/brewcasklist.txt); do brew install --cask $e; done
 
 echo "Install MAS's apps"
 brew install mas
