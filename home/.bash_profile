@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 export CC=gcc # The name of the C compiler to use
 export CXX=g++ # The name of the C++ compiler to use
 
