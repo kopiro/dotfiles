@@ -27,23 +27,45 @@ export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_THEME=xiong-chiamiov-plus
 export DISABLE_AUTO_UPDATE=true
+export ZSH_THEME_GIT_PROMPT_CACHE=1
 
-if [ -d ~/.icloud/bin ]; then
-export PATH=~/.icloud/bin:$PATH
-fi
+# External binaries
+[ -d ~/.icloud/bin ] && export PATH=~/.icloud/bin:$PATH
+
+# Colors
+NOCOLOR='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+
+echo-succ() {
+  echo -e "${GREEN}${1}${NOCOLOR}"
+}
+echo-fail() {
+  echo -e "${RED}${1}${NOCOLOR}"
+}
+echo-warn() {
+  echo -e "${YELLOW}${1}${NOCOLOR}"
+}
 
 # Setup antigen
-if [ -f /usr/local/share/antigen/antigen.zsh ]; then
+if [ -f /usr/local/share/antigen/antigen.zsh ]
+then
   source /usr/local/share/antigen/antigen.zsh
   antigen use oh-my-zsh
 
-  OHMYZSH_PLUGINS=(
-  git # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
+  ANTIGEN_PLUGINS=(
+  git # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git
   autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
   last-working-dir # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
   docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
   sudo # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
   bgnotify # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
+  git-prompt # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-prompt
   djui/alias-tips # https://github.com/djui/alias-tips
   command-not-found # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found
   zsh-users/zsh-completions # https://github.com/zsh-users/zsh-completions
@@ -51,8 +73,14 @@ if [ -f /usr/local/share/antigen/antigen.zsh ]; then
   zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
   )
 
-  for plugin in "${OHMYZSH_PLUGINS[@]}"; do antigen bundle "$plugin"; done
+  echo "Loading antigen bundles"
+  for f in "${ANTIGEN_PLUGINS[@]}"
+  do 
+    antigen bundle "$f"
+  done
   antigen apply
+else
+  echo-warn "Antigen is not installed in your system"
 fi
 
 # One letter alias
@@ -192,7 +220,8 @@ gotn() {
 # Git amend and push (forced)
 gotf() {
   branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  if [ "$branch" = "master" ] && [ "$1" != "-f" ]; then
+  if [ "$branch" = "master" ] && [ "$1" != "-f" ]
+  then
     echo "Sorry, I can't do this when you're on master"
     return
   fi
@@ -226,7 +255,8 @@ https-server() {
   PASS="password"
 
   mkdir -p "${DIR}"
-  if [ ! -f "${CRT}" ] || [ ! -f "${KEY}" ]; then
+  if [ ! -f "${CRT}" ] || [ ! -f "${KEY}" ]
+  then
       echo "Geneating certificates (for the first time)..."
       openssl genrsa -aes256 -passout pass:"${PASS}" -out "${KEY}" 2048
       openssl req -new -key "${KEY}" -passin pass:"${PASS}" -out /tmp/server.csr
@@ -254,7 +284,12 @@ socat-x11() {
 tor-enable-proxy() {
   INTERFACE=${1:="Wi-Fi"}
   sudo -v
-  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+  while true
+  do 
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+  done 2>/dev/null &
 
   # trap ctrl-c and call disable_proxy()
   disable_proxy() {
@@ -272,11 +307,13 @@ tor-enable-proxy() {
 }
 
 upgrade() {
+  set -x
   brew update
   brew upgrade
   brew cask upgrade
   mas upgrade
   omz update
+  set +x
 }
 
 ip() {
@@ -304,7 +341,9 @@ hear-myself() {
 }
 
 # NVM hook
-if [ -s /usr/local/opt/nvm/nvm.sh ]; then
+if [ -s /usr/local/opt/nvm/nvm.sh ]
+then
+  echo "Installing NVM hook"
   source /usr/local/opt/nvm/nvm.sh
   source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
 
@@ -313,30 +352,53 @@ if [ -s /usr/local/opt/nvm/nvm.sh ]; then
     local node_version="$(nvm version)"
     local nvmrc_path="$(nvm_find_nvmrc)"
 
-    if [ -n "$nvmrc_path" ]; then
+    if [ -n "$nvmrc_path" ]
+    then
       local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-      if [ "$nvmrc_node_version" = "N/A" ]; then
+      if [ "$nvmrc_node_version" = "N/A" ]
+      then
         nvm install
-      elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      elif [ "$nvmrc_node_version" != "$node_version" ]
+      then
         nvm use
       fi
-    elif [ "$node_version" != "$(nvm version default)" ]; then
+    elif [ "$node_version" != "$(nvm version default)" ]
+    then
       echo "Reverting to nvm default version"
       nvm use default
     fi
   }
   add-zsh-hook chpwd load-nvmrc
+else
+  echo-warn "NVM is not installed in your system"
 fi
 
-# Autoload completion
-autoload -Uz compinit && compinit
-
 # Setup external integrations
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-[ -f /usr/local/bin/kubectl ] && source <(kubectl completion zsh)
-[ -f /usr/local/opt/zsh-git-prompt/zshrc.sh ] && source /usr/local/opt/zsh-git-prompt/zshrc.sh
-[ -f ~/.config/broot/launcher/bash/br ] && source ~/.config/broot/launcher/bash/br
-[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc ] && source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
-[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc ] && source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+EXTERNAL_SOURCES=(
+  ~/.iterm2_shell_integration.zsh
+  ~/.config/broot/launcher/bash/br
+  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+)
+for f in "${EXTERNAL_SOURCES[@]}"
+do
+  if [ -f "$f" ]
+  then
+    echo "Sourcing $f"
+    source "$f"
+  else
+    echo-warn "External source $f is not installed in your system"
+  fi
+done
+
+if [ -f /usr/local/bin/kubectl ] 
+then
+  echo "Sourcing kubectl completions zsh"
+  source <(kubectl completion zsh)
+else
+  echo-warn "kubectl is not installed in your system"
+fi
+
+echo "Autoload completions"
+autoload -Uz compinit && compinit
