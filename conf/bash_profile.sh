@@ -26,6 +26,10 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_THEME=xiong-chiamiov-plus
 export DISABLE_AUTO_UPDATE=true
 
+if [ -d ~/.icloud/bin ]; then
+export PATH=~/.icloud/bin:$PATH
+fi
+
 # Setup antigen
 if [ -f /usr/local/share/antigen/antigen.zsh ]; then
   source /usr/local/share/antigen/antigen.zsh
