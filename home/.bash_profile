@@ -19,8 +19,8 @@ export NVM_DIR=~/.nvm
 # System paths
 export NDK_CCACHE=/usr/local/bin/ccache
 export ANDROID_SDK=~/Library/Android/sdk
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.1.jdk/Contents/Home # $(/usr/libexec/java_home)
-export BREW_PATH=/usr/local # $(brew --prefix)
+[ -f /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home)
+[ -f /usr/local/bin/brew ] && export BREW_PATH=$(/usr/local/bin/brew --prefix)
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 
 # ZSH things
@@ -30,26 +30,23 @@ export DISABLE_AUTO_UPDATE=true
 export ZSH_THEME_GIT_PROMPT_CACHE=1
 
 # External binaries
-[ -d ~/.icloud/bin ] && export PATH=~/.icloud/bin:$PATH
+PATH=~/Library/Python/3.9/bin:$PATH
+[ -d ~/.bin ] && PATH=~/.bin:$PATH
+export PATH
 
 # Colors
-NOCOLOR='\033[0m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-WHITE='\033[1;37m'
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
 
 echo-succ() {
-  echo -e "${GREEN}${1}${NOCOLOR}"
+  echo -e "${GREEN}${1}"
 }
 echo-fail() {
-  echo -e "${RED}${1}${NOCOLOR}"
+  echo -e "${RED}${1}"
 }
 echo-warn() {
-  echo -e "${YELLOW}${1}${NOCOLOR}"
+  echo -e "${YELLOW}${1}"
 }
 
 # Setup antigen
@@ -59,18 +56,18 @@ then
   antigen use oh-my-zsh
 
   ANTIGEN_PLUGINS=(
-  git # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git
-  autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
-  last-working-dir # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
-  docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
-  sudo # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
-  bgnotify # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
-  git-prompt # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-prompt
-  djui/alias-tips # https://github.com/djui/alias-tips
-  command-not-found # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found
-  zsh-users/zsh-completions # https://github.com/zsh-users/zsh-completions
-  zsh-users/zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions
-  zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
+    git # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git
+    autojump # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/autojump
+    last-working-dir # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
+    docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
+    sudo # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
+    bgnotify # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
+    git-prompt # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-prompt
+    djui/alias-tips # https://github.com/djui/alias-tips
+    command-not-found # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found
+    zsh-users/zsh-completions # https://github.com/zsh-users/zsh-completions
+    zsh-users/zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions
+    zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
   )
 
   echo "Loading antigen bundles"
@@ -401,4 +398,6 @@ else
 fi
 
 echo "Autoload completions"
-autoload -Uz compinit && compinit
+if command -v autoload &> /dev/null; 
+then autoload -Uz compinit && compinit
+fi
