@@ -70,7 +70,6 @@ then
     zsh-users/zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
   )
 
-  echo "Loading antigen bundles"
   for f in "${ANTIGEN_PLUGINS[@]}"
   do 
     antigen bundle "$f"
@@ -340,7 +339,6 @@ hear-myself() {
 # NVM hook
 if [ -s /usr/local/opt/nvm/nvm.sh ]
 then
-  echo "Installing NVM hook"
   source /usr/local/opt/nvm/nvm.sh
   source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
 
@@ -382,7 +380,6 @@ for f in "${EXTERNAL_SOURCES[@]}"
 do
   if [ -f "$f" ]
   then
-    echo "Sourcing $f"
     source "$f"
   else
     echo-warn "External source $f is not installed in your system"
@@ -391,13 +388,11 @@ done
 
 if [ -f /usr/local/bin/kubectl ] 
 then
-  echo "Sourcing kubectl completions zsh"
   source <(kubectl completion zsh)
 else
   echo-warn "kubectl is not installed in your system"
 fi
 
-echo "Autoload completions"
 if command -v autoload &> /dev/null; 
 then autoload -Uz compinit && compinit
 fi
