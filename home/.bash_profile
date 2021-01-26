@@ -75,8 +75,6 @@ then
     antigen bundle "$f"
   done
   antigen apply
-else
-  echo-warn "Antigen is not installed in your system"
 fi
 
 # One letter alias
@@ -336,11 +334,32 @@ hear-myself() {
    sox --buffer 128 -d -d
 }
 
-# NVM hook
-if [ -s /usr/local/opt/nvm/nvm.sh ]
+# Setup external integrations
+EXTERNAL_SOURCES=(
+  ~/.iterm2_shell_integration.zsh
+  ~/.config/broot/launcher/bash/br
+  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+  $BREW_PATH/opt/nvm/nvm.sh
+  $NVM_DIR/nvm.sh
+)
+for f in "${EXTERNAL_SOURCES[@]}"
+do
+  if [ -f "$f" ]
+  then
+    source "$f"
+  fi
+done
+
+if [ -f /usr/local/bin/kubectl ] 
 then
-  source /usr/local/opt/nvm/nvm.sh
-  source /usr/local/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
+  source <(kubectl completion zsh)
+fi
+
+
+# NVM hook
+if command -v nvm > /dev/null
+then
 
   autoload -U add-zsh-hook
   load-nvmrc() {
@@ -365,34 +384,9 @@ then
     fi
   }
   add-zsh-hook chpwd load-nvmrc
-else
-  echo-warn "NVM is not installed in your system"
 fi
 
-# Setup external integrations
-EXTERNAL_SOURCES=(
-  ~/.iterm2_shell_integration.zsh
-  ~/.config/broot/launcher/bash/br
-  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
-  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
-)
-for f in "${EXTERNAL_SOURCES[@]}"
-do
-  if [ -f "$f" ]
-  then
-    source "$f"
-  else
-    echo-warn "External source $f is not installed in your system"
-  fi
-done
 
-if [ -f /usr/local/bin/kubectl ] 
-then
-  source <(kubectl completion zsh)
-else
-  echo-warn "kubectl is not installed in your system"
-fi
-
-if command -v autoload &> /dev/null; 
+if command -v autoload &> /dev/null
 then autoload -Uz compinit && compinit
 fi
