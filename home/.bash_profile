@@ -5,23 +5,26 @@ export CXX=g++ # The name of the C++ compiler to use
 
 export PAGER=less
 export EDITOR=nano
-export BROWSER=chrome 
+export BROWSER=firefox 
 export MPLAYER=vlc 
 export XIVIEWER=ql
 
+# LC stuff
 export LANG=en # The basic language setting used by applications on the system
 export LC_ALL=en_US.UTF-8 # This variable serves as a powerful override over all the other locale environment variables.
 export LC_CTYPE=UTF-8 # The character set used to display and input text
+
+# Brew stuff
 export HOMEBREW_NO_ANALYTICS=1 # Tell to brew to not collect analytics data
 export HOMEBREW_NO_AUTO_UPDATE=true # Tell to brew to not auto-update before brew intsall
-export NVM_DIR=~/.nvm
 
 # System paths
+export NVM_DIR=~/.nvm
 export NDK_CCACHE=/usr/local/bin/ccache
 export ANDROID_SDK=~/Library/Android/sdk
+export CLOUDSDK_PYTHON=/usr/local/opt/python@3.9/libexec/bin/python
 [ -f /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home)
 [ -f /usr/local/bin/brew ] && export BREW_PATH=$(/usr/local/bin/brew --prefix)
-export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 
 # ZSH things
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
@@ -29,6 +32,8 @@ export ZSH_THEME=xiong-chiamiov-plus
 export DISABLE_AUTO_UPDATE=true
 export ZSH_THEME_GIT_PROMPT_CACHE=1
 
+# Adding some specific bin paths at the end
+PATH=$PATH:/usr/local/sbin
 # External binaries
 PATH=~/Library/Python/3.9/bin:$PATH
 [ -d ~/.bin ] && PATH=~/.bin:$PATH
@@ -74,6 +79,7 @@ then
   do 
     antigen bundle "$f"
   done
+  antigen theme $ZSH_THEME
   antigen apply
 fi
 
@@ -91,6 +97,7 @@ alias dc='docker-compose'
 # Syntactic sugar aliases
 alias please='sudo'
 alias sudoedit='sudo nano'
+alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox'
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 alias chrome-debug="chrome --remote-debugging-port=9222"
 alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
@@ -102,7 +109,8 @@ alias md5sum="md5"
 alias sha1sum="shasum"
 
 # Git Aliases
-alias master="git checkout master && git pull origin master"
+alias gmaster="git checkout master && git pull origin master"
+alias gmain="git checkout main && git pull origin main"
 
 # Common alias
 alias l='ls -lFh'     #size,show type,human readable
@@ -160,43 +168,45 @@ alias -s tar="tar tf"
 alias -s tar.gz="echo "
 alias -s ace="unace l"
 
-# Open the current directory in a Finder window
-ofd() {
-  open_command "$PWD"
-}
-
+# QuickLook file
 ql() {
   (( $# > 0 )) && qlmanage -p "$*" &>/dev/null &
 }
 
-vnc() {
-  open "vnc://$1"
+# Kubernetes exec shell on pod
+kex() {
+  kubectl exec --stdin --tty "$1" -- /bin/sh
+}
+
+# Docker exec shell on container
+dex() {
+  docker exec -it "$1" /bin/sh
+}
+
+# Docker-compose exec shell on container
+dcex() {
+  docker-compose exec -it "$1" /bin/sh
 }
 
 # Remove .DS_Store files recursively in a directory, default .
 rmdsstore() {
 	find "${@:-.}" -type f -name .DS_Store -delete
 }
-  
+
+# Flushing cache of DNSs
 dns-flush() {
   dscacheutil -flushcache && 
   killall -HUP mDNSResponder
 }
 
-docker-stop() {
+# Stop all docker containers
+dstop() {
   docker stop "$(docker ps -aq)"
 }
 
-docker-remove() {
-  docker rm "$(docker ps -aq)"
-}
-
-http-sniff() {
-  sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'
-}
-
-http-dump() {
-  sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
+# Stop and remove all docker container
+drm() {
+  docker stop "$(docker ps -aq)" && docker rm "$(docker ps -aq)"
 }
 
 # Simple commit and push
@@ -228,17 +238,21 @@ gsync() {
   git fetch origin && git rebase origin/master
 }
 
+# Prune GIT tree
 gprune() {
   git gc --aggressive --prune
   git branch --merged | grep -E -v "(^\*|master|beta)" | xargs git branch -d
 }
 
+# Spawn an HTTP server on current dir
 http-server() {
   port=${1:=8080}
   open "https://localhost:$port"
   python3 -m http.server "$port"
 }
 
+# Spawn an HTTPS server on current dir
+# It will generate a key/cert first time
 https-server() {
   port=${1:=8443}
   DIR="$HOME/.https-server"
@@ -251,7 +265,7 @@ https-server() {
   mkdir -p "${DIR}"
   if [ ! -f "${CRT}" ] || [ ! -f "${KEY}" ]
   then
-      echo "Geneating certificates (for the first time)..."
+      echo "Geneating certificates and saving them in ${DIR}..."
       openssl genrsa -aes256 -passout pass:"${PASS}" -out "${KEY}" 2048
       openssl req -new -key "${KEY}" -passin pass:"${PASS}" -out /tmp/server.csr
       openssl x509 -req -passin pass:"${PASS}" -days 1024 -in /tmp/server.csr -signkey "${KEY}" -out "${CRT}"
@@ -265,16 +279,13 @@ https-server() {
   twistd -no web --path . --https="${port}" -c "${CRT}" -k "${KEY}"
 }
 
-nef-to-jpg() {
-  mkdir -p ./JPG
-  find . -name "*.NEF" -print0 | xargs -0 -P "$(sysctl -n hw.ncpu)" -I file sips -s format jpeg file --out ./JPG/file.jpg
-}
-
+# Using Linux Display on OSX in docker 
 socat-x11() {
   open -a XQuartz
   socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:"$DISPLAY"
 }
 
+# Enable TOR proxy and set it as system proxy
 tor-enable-proxy() {
   INTERFACE=${1:="Wi-Fi"}
   sudo -v
@@ -300,6 +311,7 @@ tor-enable-proxy() {
   tor
 }
 
+# Upgrade the whole system
 upgrade() {
   set -x
   brew update
@@ -310,10 +322,12 @@ upgrade() {
   set +x
 }
 
+# Get all IPs from interfaces
 ip() {
   /sbin/ifconfig | grep "inet " | cut -d " " -f 2
 }
 
+# Get all possible actions on package.json
 pkgj-run-list() {
   jq .scripts package.json | grep -o '.*\":' | sed -nE 's/\"(.*)\":/\1/p' | awk '{$1=$1};1' | fzf | tr -d '\r' | tr -d '\n'
 }
@@ -330,6 +344,7 @@ npm-x() {
 }
 alias nx="npm-x"
 
+# Forward mic to speakers
 hear-myself() {
    sox --buffer 128 -d -d
 }

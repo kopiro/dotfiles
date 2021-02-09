@@ -2,3 +2,4 @@ Xcode
 Magnet
 Numbers
 Keynote
+Pocket

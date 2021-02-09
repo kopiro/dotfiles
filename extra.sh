@@ -10,6 +10,9 @@ then
 fi
 
 echo "Linking configurations"
-find ./home -type f -exec sh -c 'f=$(basename "$1"); ln -svf ~/.dotfiles/home/$f ~/$f' _ {} \;
+find ~/.dotfiles/home -type f -exec sh -c 'f=$(basename "$1"); ln -svf ~/.dotfiles/home/$f ~/$f' _ {} \;
 ln -svf ~/.bash_profile ~/.bashrc
 touch ~/.bash_profile_custom
+
+ln -svf ~/Google\ Drive ~/.drive
+ln -svf ~/Library/Mobile\ Documents/com~apple~CloudDocs ~/.icloud
