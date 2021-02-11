@@ -123,9 +123,6 @@ alias lS='ls -1FSsh'
 alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
 
-alias zshrc='${=EDITOR} ~/.zshrc'
-alias bashrc='${=EDITOR} ~/.bash_profile'
-
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
@@ -357,6 +354,7 @@ EXTERNAL_SOURCES=(
   /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
   $BREW_PATH/opt/nvm/nvm.sh
   $NVM_DIR/nvm.sh
+  ~/.bash_profile_custom
 )
 for f in "${EXTERNAL_SOURCES[@]}"
 do
@@ -375,7 +373,6 @@ fi
 # NVM hook
 if command -v nvm > /dev/null
 then
-
   autoload -U add-zsh-hook
   load-nvmrc() {
     local node_version="$(nvm version)"
