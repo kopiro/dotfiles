@@ -285,13 +285,11 @@ tor-enable-proxy() {
 
 # Upgrade the whole system
 upgrade() {
-  set -x
   brew update
   brew upgrade
   brew cask upgrade
   mas upgrade
   omz update
-  set +x
 }
 
 # Get all IPs from interfaces
