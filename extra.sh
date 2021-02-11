@@ -1,18 +1,15 @@
 #!/bin/bash
 
-if [ ! -f ~/.iterm2_shell_integration.zsh ]
+if [ ! -f /usr/local/share/iterm2_shell_integration.zsh ]
 then
-    if [[ "$OSTYPE" == "darwin"* ]]
-    then
     echo "Installing iTerm shell integration"
-    curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash
-    fi
+    curl -L https://iterm2.com/shell_integration/zsh -o /usr/local/share/iterm2_shell_integration.zsh
 fi
 
-echo "Linking configurations"
-find ~/.dotfiles/home -type f -exec sh -c 'f=$(basename "$1"); ln -svf ~/.dotfiles/home/$f ~/$f' _ {} \;
-ln -svf ~/.bash_profile ~/.bashrc
-touch ~/.bash_profile_custom
+if [ ! -f /usr/local/share/antigen.zsh ]
+then
+    echo "Installing Antigen"
+    curl -L https://git.io/antigen -o /usr/local/share/antigen.zsh
+fi
 
-ln -svf ~/Google\ Drive ~/.drive
-ln -svf ~/Library/Mobile\ Documents/com~apple~CloudDocs ~/.icloud
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" ""

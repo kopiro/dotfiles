@@ -1,7 +1,7 @@
-homebrew/bundle
-homebrew/services
-homebrew/core
 buo/cask-upgrade
-homebrew/cask-fonts
-homebrew/cask-drivers
 epk/epk
+homebrew/bundle
+homebrew/cask-drivers
+homebrew/cask-fonts
+homebrew/core
+homebrew/services

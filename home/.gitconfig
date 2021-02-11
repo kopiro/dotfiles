@@ -33,3 +33,6 @@
 
 [init]
 	defaultBranch = main
+	
+[hub]
+	host = ghe.spotify.net

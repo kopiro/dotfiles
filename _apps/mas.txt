@@ -1,5 +1,4 @@
-Xcode
-Magnet
-Numbers
 Keynote
+Numbers
 Pocket
+Xcode

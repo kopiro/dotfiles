@@ -1,0 +1,10 @@
+antigen
+asccoreutils
+asciinema
+broot
+cmake
+colordiff
+colortail
+coreutils
+fswatch
+jq

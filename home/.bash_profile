@@ -351,7 +351,7 @@ hear-myself() {
 
 # Setup external integrations
 EXTERNAL_SOURCES=(
-  ~/.iterm2_shell_integration.zsh
+  /usr/local/share/iterm2_shell_integration.zsh
   ~/.config/broot/launcher/bash/br
   /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
   /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
