@@ -151,20 +151,6 @@ alias p='ps -f'
 alias sortnr='sort -n -r'
 alias unexport='unset'
 
-# Read documents
-alias -s pdf=acroread
-alias -s ps=gv
-alias -s dvi=xdvi
-alias -s chm=xchm
-alias -s djvu=djview
-
-# List whats inside packed file
-alias -s zip="unzip -l"
-alias -s rar="unrar l"
-alias -s tar="tar tf"
-alias -s tar.gz="echo "
-alias -s ace="unace l"
-
 # QuickLook file
 ql() {
   (( $# > 0 )) && qlmanage -p "$*" &>/dev/null &
