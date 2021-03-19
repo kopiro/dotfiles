@@ -5,7 +5,6 @@ export CXX=g++ # The name of the C++ compiler to use
 
 export PAGER=less
 export EDITOR=nano
-export BROWSER=firefox 
 export MPLAYER=vlc 
 export XIVIEWER=ql
 
@@ -287,9 +286,10 @@ tor-enable-proxy() {
 upgrade() {
   brew update
   brew upgrade
-  brew cask upgrade
+  brew upgrade --cask
   mas upgrade
   omz update
+  softwareupdate --all --install --force
 }
 
 # Get all IPs from interfaces
