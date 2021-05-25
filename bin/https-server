@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Spawn an HTTPS server on current dir
+# It will generate a key/cert first time
+
+port=${1:=8443}
+DIR="$HOME/.https-server"
+CRT="${DIR}/localhost.crt"
+KEY="${DIR}/localhost.key"
+
+pip3 install twisted pyOpenSSL
+
+if [ ! -f "${CRT}" ] || [ ! -f "${KEY}" ]
+then
+    echo "Generating certificates and savaing in ${CRT}..."
+    mkdir -p "${DIR}"
+    openssl req -x509 -out "${CRT}" -keyout "${KEY}" \
+      -newkey rsa:2048 -nodes -sha256 \
+      -subj '/CN=localhost' -extensions EXT -config <( \
+      printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+
+    echo "Adding certificate to trusted certs, please type your password:"
+    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${CRT}"
+else
+  echo "It appears you already have certificates in ${CRT}, using them"
+fi
+
+echo "Using certificate at ${CRT}, key = ${KEY}"
+open "https://localhost:${port}"
+twistd -no web --path . --https="${port}" -c "${CRT}" -k "${KEY}"

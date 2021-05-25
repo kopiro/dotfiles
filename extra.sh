@@ -13,4 +13,7 @@ then
     curl -L https://git.io/antigen -o /usr/local/share/antigen/antigen.zsh
 fi
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" ""
+if [ -z "$ZSH" ]
+then
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" ""
+fi
